@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
 
     private float speed = 10f;
-    [SerializeField] private Vector2 move;
+    private Vector2 move;
     private Rigidbody2D playerRb;
     private GameObject gameManager;
 
@@ -27,8 +27,9 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         foldAction.performed += Fold;
-        foldAction.Enable();
         switchAction.performed += Switch;
+
+        foldAction.Enable();
         switchAction.Enable();
         moveAction.Enable();
     }
@@ -36,8 +37,9 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         foldAction.performed -= Fold;
-        foldAction.Disable();
         switchAction.performed -= Switch;
+
+        foldAction.Disable();
         switchAction.Disable();
         moveAction.Disable();
     }
@@ -62,12 +64,11 @@ public class PlayerController : MonoBehaviour
 
     private void Fold(InputAction.CallbackContext context)
     {
-        Debug.Log("Fold");
+        
     }
 
     private void Switch(InputAction.CallbackContext context)
     {
-        Debug.Log("Switch " + gameObject.name);
         gameManager.GetComponent<GameManager>().SwitchHero(gameObject);
     }
 

@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
         activeHeroIndex %= heroes.Length;
         activeHero = heroes[activeHeroIndex];
 
-        Debug.Log("Activate " + activeHero.name);
         activeHero.GetComponent<PlayerInput>().enabled = true;
         activeHero.GetComponent<PlayerController>().enabled = true;
     }
