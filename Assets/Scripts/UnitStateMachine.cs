@@ -66,19 +66,11 @@ public class UnitStateMachine : MonoBehaviour
         turnState = TurnState.Acting;
     }
 
-    private IEnumerator MoveToTarget(Vector2 target)
+    private bool MoveToTarget(Vector3 target)
     {
-        while (MoveTick(target)) { yield return null; }
-    }
-
-    private bool MoveTick(Vector2 target)
-    {
-        transform.position = Vector2.MoveTowards(transform.position, target, animationSpeed * Time.deltaTime);
-
-        float xDifference = transform.position.x - target.x;
-        float yDifference = transform.position.y - target.y;
-        bool hasArrived = (Mathf.Approximately(xDifference, 0) && Mathf.Approximately(yDifference, 0));
-        return !hasArrived;
+        Debug.Log("Moving to " + myAttack.target.name);
+        transform.position = Vector3.MoveTowards(transform.position, target, animationSpeed * Time.deltaTime);
+        return !(Mathf.Approximately(transform.position.x - target.x, 0) && Mathf.Approximately(transform.position.y - target.y, 0));
     }
 
     private IEnumerator StartAttack()
@@ -90,17 +82,16 @@ public class UnitStateMachine : MonoBehaviour
 
         Vector2 startPosition = transform.position;
 
-        IEnumerator coroutine = MoveToTarget(myAttack.target.transform.position);
-        StartCoroutine(coroutine);
-
-        yield return new WaitForSeconds(0.5f);
-        StopCoroutine(coroutine);
+        // Calculate a target position to end up 3 units away from the attack target.
+        Vector3 direction = (transform.position - myAttack.target.transform.position).normalized;
+        Vector3 targetPosition = myAttack.target.transform.position + (3 * direction);
+        while (MoveToTarget(targetPosition)) { yield return null; }
 
         // DoDomage() {}
 
         initiative -= battleManager.turnThreshold;
 
-        battleManager.MoveToTarget(gameObject, startPosition);
+        while (MoveToTarget(startPosition)) { yield return null; }
 
         attackStarted = false;
         turnState = TurnState.Idle;

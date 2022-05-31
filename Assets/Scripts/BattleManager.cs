@@ -25,7 +25,7 @@ public class BattleManager : MonoBehaviour
 
     public List<CachedInitiative> unitInitiatives = new List<CachedInitiative>();
 
-    public float animationSpeed = 10f;
+    public float animationSpeed = 5f;
     public float turnThreshold = 100f;
 
     private bool combatStarted = false;
@@ -156,7 +156,7 @@ public class BattleManager : MonoBehaviour
     // Move a unit until it arrives at its target.
     public IEnumerator MoveToTarget(GameObject unit, Vector2 target)
     {
-        while (MoveTick(unit, target)) { yield return null; }
+        yield return new WaitUntil(() => MoveTick(unit, target));
     }
 
     // Move the unit then return false when the unit arrives to end the parent coroutine.
@@ -167,8 +167,7 @@ public class BattleManager : MonoBehaviour
         float xDifference = unit.transform.position.x - target.x;
         float yDifference = unit.transform.position.y - target.y;
         bool hasArrived = (Mathf.Approximately(xDifference, 0) && Mathf.Approximately(yDifference, 0));
-        Debug.Log(hasArrived);
-        return !hasArrived;
+        return hasArrived;
     }
 
     private void PrepareInitiative()
