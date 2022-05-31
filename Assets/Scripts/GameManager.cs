@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
         }
         else {
             _instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
         foreach (GameObject hero in heroes) {
             hero.GetComponent<PlayerController>().enabled = false;
         }
+
         activeHeroIndex = 0;
         activeHero = heroes[activeHeroIndex];
         activeHero.GetComponent<PlayerController>().enabled = true;

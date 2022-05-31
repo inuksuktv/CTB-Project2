@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    private GameObject gameManager;
     private PlayerInput playerInput;
 
     private InputAction foldAction;
@@ -14,7 +15,6 @@ public class PlayerController : MonoBehaviour
     private float speed = 10f;
     private Vector2 move;
     private Rigidbody2D playerRb;
-    private GameObject gameManager;
     private Animator animator;
 
     private void Awake()
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
     private void Switch(InputAction.CallbackContext context)
     {
-        gameManager.GetComponent<GameManager>().SwitchHero(gameObject);
+        GameManager.Instance.SwitchHero(gameObject);
     }
 
     private void Move()
