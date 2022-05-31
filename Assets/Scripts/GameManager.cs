@@ -9,15 +9,28 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject activeHero;
     private int activeHeroIndex;
 
+    private static GameManager _instance;
+
+    public static GameManager Instance { get { return _instance; } }
+
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this) {
+            Destroy(gameObject);
+        }
+        else {
+            _instance = this;
+        }
+    }
+
     private void Start()
     {
         foreach (GameObject hero in heroes) {
-            hero.GetComponent<PlayerInput>().enabled = false;
             hero.GetComponent<PlayerController>().enabled = false;
         }
         activeHeroIndex = 0;
         activeHero = heroes[activeHeroIndex];
-        activeHero.GetComponent<PlayerInput>().enabled = true;
         activeHero.GetComponent<PlayerController>().enabled = true;
     }
 
@@ -28,14 +41,12 @@ public class GameManager : MonoBehaviour
 
     public void SwitchHero(GameObject unit)
     {
-        unit.GetComponent<PlayerInput>().enabled = false;
         unit.GetComponent<PlayerController>().enabled = false;
 
         activeHeroIndex++;
         activeHeroIndex %= heroes.Length;
         activeHero = heroes[activeHeroIndex];
 
-        activeHero.GetComponent<PlayerInput>().enabled = true;
         activeHero.GetComponent<PlayerController>().enabled = true;
     }
 }

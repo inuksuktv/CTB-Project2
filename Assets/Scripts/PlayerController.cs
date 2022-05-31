@@ -15,10 +15,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 move;
     private Rigidbody2D playerRb;
     private GameObject gameManager;
+    private Animator animator;
 
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
+        gameManager = GameObject.Find("GameManager");
+        playerInput = gameManager.GetComponent<PlayerInput>();
         foldAction = playerInput.actions["Fold"];
         switchAction = playerInput.actions["Switch"];
         moveAction = playerInput.actions["Move"];
@@ -47,8 +49,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        gameManager = GameObject.Find("GameManager");
         playerRb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     
@@ -64,7 +66,8 @@ public class PlayerController : MonoBehaviour
 
     private void Fold(InputAction.CallbackContext context)
     {
-        
+        animator.SetTrigger("Attack");
+        Debug.Log("Fold");
     }
 
     private void Switch(InputAction.CallbackContext context)
