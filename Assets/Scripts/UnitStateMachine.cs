@@ -44,11 +44,13 @@ public class UnitStateMachine : MonoBehaviour
             case TurnState.Choosing:
 
                 ChooseAction();
+
                 break;
 
             case TurnState.Acting:
 
                 StartCoroutine(StartAttack());
+
                 break;
 
             case TurnState.Dead:
@@ -68,7 +70,6 @@ public class UnitStateMachine : MonoBehaviour
 
     private bool MoveToTarget(Vector3 target)
     {
-        Debug.Log("Moving to " + myAttack.target.name);
         transform.position = Vector3.MoveTowards(transform.position, target, animationSpeed * Time.deltaTime);
         return !(Mathf.Approximately(transform.position.x - target.x, 0) && Mathf.Approximately(transform.position.y - target.y, 0));
     }

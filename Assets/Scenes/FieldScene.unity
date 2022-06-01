@@ -912,7 +912,7 @@ MonoBehaviour:
   currentATK: 0
   baseDEF: 0
   currentDEF: 0
-  speed: 20
+  speed: 30
   stateCharge: 0
   animationSpeed: 0
   fireTokens: 0

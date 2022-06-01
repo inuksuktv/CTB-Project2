@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour
         Collider2D hitCollider = Physics2D.OverlapCircle(transform.position, 15f, mask);
 
         if (hitCollider != null) {
-            hitCollider.gameObject.GetComponent<BattleManager>().StartCombat(collision.gameObject);
+            hitCollider.gameObject.GetComponent<BattleManager>().StartCoroutine("StartCombat", collision.gameObject);
         }
     }
 }

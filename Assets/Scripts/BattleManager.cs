@@ -15,8 +15,7 @@ public class BattleManager : MonoBehaviour
     public BattleState battleState;
 
     private BattleGUIManager battleGUI;
-    private Transform[] heroMarkers = new Transform[4];
-    private List<Transform> enemyMarkers = new List<Transform>();
+    private Transform[] battleMarkers = new Transform[10];
     private List<GameObject> enemiesNearby = new List<GameObject>();
 
     public List<GameObject> heroesInBattle = new List<GameObject>();
@@ -27,16 +26,14 @@ public class BattleManager : MonoBehaviour
 
     public float animationSpeed = 5f;
     public float turnThreshold = 100f;
+    private float timer;
 
     private bool combatStarted = false;
 
     void Start()
     {
-        for (int i = 0; i < 4; i++) {
-            heroMarkers[i] = transform.GetChild(i);
-        }
-        for (int i = 0; i < 6; i++) {
-            enemyMarkers.Add(transform.GetChild(i + 4));
+        for (int i = 0; i < 10; i++) {
+            battleMarkers[i] = transform.GetChild(i);
         }
 
         battleGUI = GetComponent<BattleGUIManager>();
@@ -83,15 +80,15 @@ public class BattleManager : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        StartCombat(collider.gameObject);
+        StartCoroutine(StartCombat(collider.gameObject));
     }
 
 
-    public void StartCombat(GameObject unit)
+    public IEnumerator StartCombat(GameObject unit)
     {
         // Set a flag so we only start combat once.
         if (combatStarted) {
-            return;
+            yield break;
         }
         combatStarted = true;
 
@@ -99,7 +96,7 @@ public class BattleManager : MonoBehaviour
 
         LoadCombatants();
 
-        MoveUnitsToMarkers();
+        yield return StartCoroutine(MoveUnitsToMarkers());
 
         battleGUI.enabled = true;
         battleGUI.heroGUI = BattleGUIManager.HeroGUI.Available;
@@ -136,21 +133,19 @@ public class BattleManager : MonoBehaviour
     }
 
     // Start a coroutine for each unit to move to its marker.
-    private void MoveUnitsToMarkers()
+    private IEnumerator MoveUnitsToMarkers()
     {
-        for (int i = 0; i < 4; i++) {
-            GameObject hero = heroesInBattle[i];
-            Transform mark = heroMarkers[i];
-            IEnumerator coroutine = MoveToTarget(hero, mark.position);
+        Queue<IEnumerator> coroutines = new Queue<IEnumerator>();
+
+        for (int i = 0; i < combatants.Count; i++) {
+            GameObject unit = combatants[i];
+            Vector2 mark = battleMarkers[i].position;
+            IEnumerator coroutine = MoveToTarget(unit, mark, coroutines);
+            coroutines.Enqueue(coroutine);
             StartCoroutine(coroutine);
         }
 
-        for (int i = 0; i < enemiesInBattle.Count; i++) {
-            GameObject enemy = enemiesInBattle[i];
-            Transform mark = enemyMarkers[i];
-            IEnumerator coroutine = MoveToTarget(enemy, mark.position);
-            StartCoroutine(coroutine);
-        }
+        while (coroutines.Count > 0) { yield return null; }
     }
 
     // Move a unit until it arrives at its target.
@@ -159,14 +154,20 @@ public class BattleManager : MonoBehaviour
         yield return new WaitUntil(() => MoveTick(unit, target));
     }
 
-    // Move the unit then return false when the unit arrives to end the parent coroutine.
+    public IEnumerator MoveToTarget(GameObject unit, Vector2 target, Queue<IEnumerator> coroutineQueue)
+    {
+        yield return new WaitUntil(() => MoveTick(unit, target));
+        coroutineQueue.Dequeue();
+    }
+
+    // Move the unit then return whether the unit has arrived at the target.
     private bool MoveTick(GameObject unit, Vector2 target)
     {
         unit.transform.position = Vector2.MoveTowards(unit.transform.position, target, animationSpeed * Time.deltaTime);
 
         float xDifference = unit.transform.position.x - target.x;
         float yDifference = unit.transform.position.y - target.y;
-        bool hasArrived = (Mathf.Approximately(xDifference, 0) && Mathf.Approximately(yDifference, 0));
+        bool hasArrived = Mathf.Approximately(xDifference, 0) && Mathf.Approximately(yDifference, 0);
         return hasArrived;
     }
 
