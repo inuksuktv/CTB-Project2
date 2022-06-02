@@ -186,7 +186,7 @@ MonoBehaviour:
   currentATK: 0
   baseDEF: 0
   currentDEF: 0
-  speed: 33
+  speed: 28
   stateCharge: 0
   animationSpeed: 0
   fireTokens: 0
@@ -912,7 +912,7 @@ MonoBehaviour:
   currentATK: 0
   baseDEF: 0
   currentDEF: 0
-  speed: 30
+  speed: 24
   stateCharge: 0
   animationSpeed: 0
   fireTokens: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,24 +16,28 @@ public class BattleManager : MonoBehaviour
     public BattleState battleState;
 
     private BattleGUIManager battleGUI;
-    private Transform[] battleMarkers = new Transform[10];
+    private Transform[] battleMarkers;
     private List<GameObject> enemiesNearby = new List<GameObject>();
 
     public List<GameObject> heroesInBattle = new List<GameObject>();
     public List<GameObject> enemiesInBattle = new List<GameObject>();
     public List<GameObject> combatants = new List<GameObject>();
 
-    public List<CachedInitiative> unitInitiatives = new List<CachedInitiative>();
+    public CachedInitiative[] unitInitiatives;
+    public CachedInitiative[] cacheCopy;
+    public List<GameObject> turnQueue = new List<GameObject>();
 
-    public float animationSpeed = 5f;
-    public float turnThreshold = 100f;
-    private float timer;
+    public readonly float animationSpeed = 10f;
+    public readonly float turnThreshold = 100f;
+    public readonly int turnQueueSize = 10;
 
     private bool combatStarted = false;
 
     void Start()
     {
-        for (int i = 0; i < 10; i++) {
+        // Get the battleMarker locations which are children of the battleManager. Children 0, 1, 2, 3 are always the heroes.
+        battleMarkers = new Transform[transform.childCount];
+        for (int i = 0; i < battleMarkers.Length; i++) {
             battleMarkers[i] = transform.GetChild(i);
         }
 
@@ -52,13 +57,16 @@ public class BattleManager : MonoBehaviour
                 if (combatants.Count == 0) { battleState = BattleState.Idle; }
 
                 PrepareInitiative();
-
-                GenerateQueue();
-
+                CalculateTicksToNextTurn();
                 AdvanceTime();
 
-                battleGUI.ReceiveTurnQueue(unitInitiatives);
+                // Generate a turnQueue.
+                GenerateTurnQueue();
 
+                // Send the turnQueue to the battleGUI.
+                battleGUI.ReceiveTurnQueue(turnQueue);
+
+                // Tell the actor to act and wait until it says it's done.
                 UnitStateMachine actor = unitInitiatives[0].unit.GetComponent<UnitStateMachine>();
                 actor.turnState = UnitStateMachine.TurnState.Choosing;
                 battleState = BattleState.Idle;
@@ -108,16 +116,13 @@ public class BattleManager : MonoBehaviour
 
     private void LoadCombatants()
     {
-        enemiesNearby.Clear();
-        heroesInBattle.Clear();
-        enemiesInBattle.Clear();
-        combatants.Clear();
-
+        // Load heroes.
         foreach (GameObject hero in GameManager.Instance.heroes) {
             heroesInBattle.Add(hero);
             combatants.Add(hero);
         }
 
+        // Load enemies.
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 20f);
 
         foreach (Collider2D collider in hitColliders) {
@@ -132,20 +137,20 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // Start a coroutine for each unit to move to its marker.
+    // Move each unit to its mark. Wait until they've all arrived.
     private IEnumerator MoveUnitsToMarkers()
     {
-        Queue<IEnumerator> coroutines = new Queue<IEnumerator>();
+        Coroutine[] coroutines = new Coroutine[combatants.Count];
 
-        for (int i = 0; i < combatants.Count; i++) {
+        for (int i = 0; i < coroutines.Length; i++) {
             GameObject unit = combatants[i];
             Vector2 mark = battleMarkers[i].position;
-            IEnumerator coroutine = MoveToTarget(unit, mark, coroutines);
-            coroutines.Enqueue(coroutine);
-            StartCoroutine(coroutine);
+            coroutines[i] = StartCoroutine(MoveToTarget(unit, mark));
         }
 
-        while (coroutines.Count > 0) { yield return null; }
+        for (int i = 0; i < coroutines.Length; i++) {
+            yield return coroutines[i];
+        }
     }
 
     // Move a unit until it arrives at its target.
@@ -153,14 +158,8 @@ public class BattleManager : MonoBehaviour
     {
         yield return new WaitUntil(() => MoveTick(unit, target));
     }
-
-    public IEnumerator MoveToTarget(GameObject unit, Vector2 target, Queue<IEnumerator> coroutineQueue)
-    {
-        yield return new WaitUntil(() => MoveTick(unit, target));
-        coroutineQueue.Dequeue();
-    }
-
-    // Move the unit then return whether the unit has arrived at the target.
+    
+    // Move the unit. Return true when the unit arrives.
     private bool MoveTick(GameObject unit, Vector2 target)
     {
         unit.transform.position = Vector2.MoveTowards(unit.transform.position, target, animationSpeed * Time.deltaTime);
@@ -171,45 +170,84 @@ public class BattleManager : MonoBehaviour
         return hasArrived;
     }
 
+    // Cache each combatant's current speed and initiative.
     private void PrepareInitiative()
     {
-        unitInitiatives.Clear();
+        unitInitiatives = new CachedInitiative[combatants.Count];
 
         // Read each combatant's data into a new member of unitInitiatives.
-        foreach (GameObject combatant in combatants) {
+        for (int i = 0; i < unitInitiatives.Length; i++) {
             CachedInitiative currentCache = new CachedInitiative();
-            UnitStateMachine script = combatant.GetComponent<UnitStateMachine>();
 
-            currentCache.unit = combatant;
+            currentCache.unit = combatants[i];
+            UnitStateMachine script = combatants[i].GetComponent<UnitStateMachine>();
+
             currentCache.initiative = script.initiative;
             currentCache.speed = script.speed;
-            unitInitiatives.Add(currentCache);
+            unitInitiatives[i] = currentCache;
         }
     }
 
-    private void GenerateQueue()
+    // Sort units by ticks needed.
+    private void CalculateTicksToNextTurn()
     {
         // Calculate how many ticks each unit needs to fill its initiative.
-        foreach (CachedInitiative actor in unitInitiatives) {
-            double initiativeDifference = turnThreshold - actor.initiative;
-            actor.ticks = initiativeDifference / actor.speed;
+        foreach (CachedInitiative unit in unitInitiatives) {
+            double initiativeDifference = turnThreshold - unit.initiative;
+            unit.ticksToNextTurn = initiativeDifference / unit.speed;
         }
 
-        // Sort the cache by ticks. Lowest ticks first.
-        unitInitiatives.Sort(delegate (CachedInitiative a, CachedInitiative b) {
-            return a.ticks.CompareTo(b.ticks);
+        // Sort the array by ticks. Least ticks first.
+        Array.Sort(unitInitiatives, delegate (CachedInitiative a, CachedInitiative b) {
+            return a.ticksToNextTurn.CompareTo(b.ticksToNextTurn);
         });
     }
 
+    // Increase each unit's initiative to bring up the next turn. Also increases the cached initiative.
     private void AdvanceTime()
     {
         if (unitInitiatives[0].initiative >= turnThreshold) { return; }
         else {
-            double ticksToAdvance = unitInitiatives[0].ticks;
+            double ticksToAdvance = unitInitiatives[0].ticksToNextTurn;
             foreach (CachedInitiative cache in unitInitiatives) {
                 UnitStateMachine script = cache.unit.GetComponent<UnitStateMachine>();
                 script.initiative += script.speed * ticksToAdvance;
                 cache.initiative += script.speed * ticksToAdvance;
+            }
+        }
+    }
+
+    // This method copies unitInitiatives to simulate turns and assumes the list is already sorted with the first entry at 100 initiative.
+    private void GenerateTurnQueue()
+    {
+        cacheCopy = new CachedInitiative[unitInitiatives.Length];
+        Array.Copy(unitInitiatives, cacheCopy, cacheCopy.Length);
+
+        turnQueue.Clear();
+
+        // Populate the turnQueue using the copied array to simulate turns.
+        while (turnQueue.Count < turnQueueSize) {
+
+            // Simulate taking a turn. The first entry is ready at 100 initiative.
+            turnQueue.Add(cacheCopy[0].unit);
+            cacheCopy[0].initiative -= turnThreshold;
+
+            // Update ticksToNextTurn and sort.
+            foreach (CachedInitiative cache in cacheCopy) {
+                double initiativeDifference = turnThreshold - cache.initiative;
+                cache.ticksToNextTurn = initiativeDifference / cache.speed;
+            }
+            Array.Sort(cacheCopy, delegate (CachedInitiative a, CachedInitiative b) {
+                return a.ticksToNextTurn.CompareTo(b.ticksToNextTurn);
+            });
+
+            // Advance to the next turn.
+            if (cacheCopy[0].initiative >= turnThreshold) { continue; }
+            else {
+                double ticksToAdvance = cacheCopy[0].ticksToNextTurn;
+                foreach (CachedInitiative cache in cacheCopy) {
+                    cache.initiative += cache.speed * ticksToAdvance;
+                }
             }
         }
     }
