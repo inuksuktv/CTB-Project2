@@ -12,7 +12,7 @@ public class BattleGUIManager : MonoBehaviour
     }
     public HeroGUI heroGUI;
 
-    public List<Portraits> turnQueue = new List<Portraits>();
+    public List<Portraits> portraits = new List<Portraits>();
 
     void Start()
     {
@@ -40,37 +40,38 @@ public class BattleGUIManager : MonoBehaviour
                 break;
         }
     }
-    public void ReceiveTurnQueue(List<CachedInitiative> turnList)
+    public void ReceiveTurnQueue(List<GameObject> turnQueue)
     {
         heroGUI = HeroGUI.Available;
 
-        GeneratePortraits(turnList);
+        GeneratePortraits(turnQueue);
         AddPortraitsToGUI();
     }
 
-    private void GeneratePortraits(List<CachedInitiative> turnList)
+    // Prepare the portraits based on the turnQueue.
+    private void GeneratePortraits(List<GameObject> turnQueue)
     {
-        turnQueue.Clear();
+        portraits.Clear();
 
-        foreach (CachedInitiative cache in turnList) {
+        foreach (GameObject turn in turnQueue) {
             Portraits newPanel = new Portraits {
-                unit = cache.unit,
-                sprite = cache.unit.GetComponent<UnitStateMachine>().portrait,
+                unit = turn,
+                sprite = turn.GetComponent<UnitStateMachine>().portrait,
                 duplicate = false
             };
-            foreach (Portraits portrait in turnQueue) {
-                if (portrait.unit == cache.unit) {
+            foreach (Portraits portrait in portraits) {
+                if (portrait.unit == turn) {
                     newPanel.duplicate = true;
                 }
             }
-            turnQueue.Add(newPanel);
+            portraits.Add(newPanel);
         }
     }
 
     private void AddPortraitsToGUI()
     {
         int index = 0;
-        foreach (Portraits portrait in turnQueue) {
+        foreach (Portraits portrait in portraits) {
             index++;
         }
     }
