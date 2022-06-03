@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnitStateMachine : MonoBehaviour
 {
     protected BattleManager battleManager;
+    protected Animator animator;
 
     public enum TurnState
     {
@@ -20,6 +21,7 @@ public class UnitStateMachine : MonoBehaviour
     public float currentHP, maxHP, baseATK, currentATK, baseDEF, currentDEF, speed, stateCharge, animationSpeed;
     public int fireTokens, waterTokens, earthTokens, skyTokens;
     public bool dualState, alive, attackStarted;
+    public bool animationComplete;
 
     public double initiative;
 
@@ -30,6 +32,7 @@ public class UnitStateMachine : MonoBehaviour
     private void Start()
     {
         battleManager = GameObject.Find("BattleManager").GetComponent<BattleManager>();
+        animator = GetComponent<Animator>();
         animationSpeed = battleManager.animationSpeed;
         turnState = TurnState.Idle;
     }
@@ -68,10 +71,20 @@ public class UnitStateMachine : MonoBehaviour
         turnState = TurnState.Acting;
     }
 
-    private bool MoveToTarget(Vector3 target)
+    private IEnumerator MoveToTarget(Vector2 target)
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, animationSpeed * Time.deltaTime);
-        return !(Mathf.Approximately(transform.position.x - target.x, 0) && Mathf.Approximately(transform.position.y - target.y, 0));
+        yield return new WaitUntil(() => MoveTick(target));
+    }
+
+    // Move the unit. Return true when the unit arrives.
+    private bool MoveTick(Vector2 target)
+    {
+        transform.position = Vector2.MoveTowards(transform.position, target, animationSpeed * Time.deltaTime);
+
+        float xDifference = transform.position.x - target.x;
+        float yDifference = transform.position.y - target.y;
+        bool hasArrived = Mathf.Approximately(xDifference, 0) && Mathf.Approximately(yDifference, 0);
+        return hasArrived;
     }
 
     private IEnumerator StartAttack()
@@ -86,16 +99,33 @@ public class UnitStateMachine : MonoBehaviour
         // Calculate a target position to end up 3 units away from the attack target.
         Vector3 direction = (transform.position - myAttack.target.transform.position).normalized;
         Vector3 targetPosition = myAttack.target.transform.position + (3 * direction);
-        while (MoveToTarget(targetPosition)) { yield return null; }
+        yield return MoveToTarget(targetPosition);
+
+        // Trigger an animation. Wait by setting an event in the animation to set animationComplete to true.
+        if (animator != null) {
+            animator.SetTrigger("Fold");
+        }
+        
+        animationComplete = false;
+        if (animator != null) {
+            while (!animationComplete) { yield return null; }
+        }
 
         // DoDomage() {}
 
         initiative -= battleManager.turnThreshold;
 
-        while (MoveToTarget(startPosition)) { yield return null; }
+        yield return new WaitForSeconds(0.1f);
+
+        yield return MoveToTarget(startPosition);
 
         attackStarted = false;
         turnState = TurnState.Idle;
         battleManager.battleState = BattleManager.BattleState.AdvanceTime;
+    }
+
+    private void AnimationFinished()
+    {
+        animationComplete = true;
     }
 }

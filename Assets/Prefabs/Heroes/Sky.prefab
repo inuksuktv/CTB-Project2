@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5820619604419840377}
   - component: {fileID: 2832749172823646140}
   - component: {fileID: 3884604489345871584}
+  - component: {fileID: 511995444}
   m_Layer: 8
   m_Name: Sky
   m_TagString: Hero
@@ -164,3 +165,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.669766, y: 1.5625}
   m_EdgeRadius: 0
+--- !u!114 &511995444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227104056123476810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12337649e1bded143bc1387543423818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnState: 0
+  unitName: 
+  currentHP: 0
+  maxHP: 0
+  baseATK: 0
+  currentATK: 0
+  baseDEF: 0
+  currentDEF: 0
+  speed: 28
+  stateCharge: 0
+  animationSpeed: 0
+  fireTokens: 0
+  waterTokens: 0
+  earthTokens: 0
+  skyTokens: 0
+  dualState: 0
+  alive: 0
+  attackStarted: 0
+  animationComplete: 0
+  initiative: 0
+  attackList: []
+  portrait: {fileID: 0}

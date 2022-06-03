@@ -128,77 +128,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2652800405726246657, guid: c816674dcbc2928468380821b3e62329, type: 3}
   m_PrefabInstance: {fileID: 1423830253}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &302963703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 302963702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12337649e1bded143bc1387543423818, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnState: 0
-  unitName: 
-  currentHP: 0
-  maxHP: 0
-  baseATK: 0
-  currentATK: 0
-  baseDEF: 0
-  currentDEF: 0
-  speed: 19
-  stateCharge: 0
-  animationSpeed: 0
-  fireTokens: 0
-  waterTokens: 0
-  earthTokens: 0
-  skyTokens: 0
-  dualState: 0
-  alive: 0
-  attackStarted: 0
-  initiative: 0
-  attackList: []
-  portrait: {fileID: 0}
 --- !u!1 &511995443 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1227104056123476810, guid: b63529d1b3e390045a819548bfe4564e, type: 3}
   m_PrefabInstance: {fileID: 1008656238}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &511995444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511995443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12337649e1bded143bc1387543423818, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnState: 0
-  unitName: 
-  currentHP: 0
-  maxHP: 0
-  baseATK: 0
-  currentATK: 0
-  baseDEF: 0
-  currentDEF: 0
-  speed: 28
-  stateCharge: 0
-  animationSpeed: 0
-  fireTokens: 0
-  waterTokens: 0
-  earthTokens: 0
-  skyTokens: 0
-  dualState: 0
-  alive: 0
-  attackStarted: 0
-  initiative: 0
-  attackList: []
-  portrait: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,77 +221,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2460586836352037650, guid: e39212ed7e764144d8ab30984deb5163, type: 3}
   m_PrefabInstance: {fileID: 2047812602}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &550100896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 550100895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12337649e1bded143bc1387543423818, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnState: 0
-  unitName: 
-  currentHP: 0
-  maxHP: 0
-  baseATK: 0
-  currentATK: 0
-  baseDEF: 0
-  currentDEF: 0
-  speed: 18
-  stateCharge: 0
-  animationSpeed: 0
-  fireTokens: 0
-  waterTokens: 0
-  earthTokens: 0
-  skyTokens: 0
-  dualState: 0
-  alive: 0
-  attackStarted: 0
-  initiative: 0
-  attackList: []
-  portrait: {fileID: 0}
 --- !u!1 &773139595 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1403155672268915342, guid: 3816743e10e309a46a0f0a0797a34f89, type: 3}
   m_PrefabInstance: {fileID: 1139497176}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &773139596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 773139595}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12337649e1bded143bc1387543423818, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnState: 0
-  unitName: 
-  currentHP: 0
-  maxHP: 0
-  baseATK: 0
-  currentATK: 0
-  baseDEF: 0
-  currentDEF: 0
-  speed: 20
-  stateCharge: 0
-  animationSpeed: 0
-  fireTokens: 0
-  waterTokens: 0
-  earthTokens: 0
-  skyTokens: 0
-  dualState: 0
-  alive: 0
-  attackStarted: 0
-  initiative: 0
-  attackList: []
-  portrait: {fileID: 0}
 --- !u!1 &915104501
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,6 +790,7 @@ MonoBehaviour:
   dualState: 0
   alive: 0
   attackStarted: 0
+  animationComplete: 0
   initiative: 0
   attackList: []
   portrait: {fileID: 0}

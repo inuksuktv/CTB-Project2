@@ -56,14 +56,13 @@ public class BattleManager : MonoBehaviour
 
                 if (combatants.Count == 0) { battleState = BattleState.Idle; }
 
+                // Advance the battle state to the next turn. At the end of this block, unitInitiatives is sorted with the actor at the front with 100 initiative.
                 PrepareInitiative();
                 CalculateTicksToNextTurn();
                 AdvanceTime();
 
-                // Generate a turnQueue.
+                // Simulate time and generate a turnQueue. This makes no changes to unitInitiatives.
                 GenerateTurnQueue();
-
-                // Send the turnQueue to the battleGUI.
                 battleGUI.ReceiveTurnQueue(turnQueue);
 
                 // Tell the actor to act and wait until it says it's done.
@@ -178,10 +177,9 @@ public class BattleManager : MonoBehaviour
         // Read each combatant's data into a new member of unitInitiatives.
         for (int i = 0; i < unitInitiatives.Length; i++) {
             CachedInitiative currentCache = new CachedInitiative();
-
-            currentCache.unit = combatants[i];
             UnitStateMachine script = combatants[i].GetComponent<UnitStateMachine>();
 
+            currentCache.unit = combatants[i];
             currentCache.initiative = script.initiative;
             currentCache.speed = script.speed;
             unitInitiatives[i] = currentCache;
