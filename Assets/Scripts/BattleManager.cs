@@ -54,9 +54,12 @@ public class BattleManager : MonoBehaviour
 
             case BattleState.AdvanceTime:
 
-                if (combatants.Count == 0) { battleState = BattleState.Idle; }
+                if (combatants.Count == 0) {
+                    battleState = BattleState.Idle;
+                    break;
+                }
 
-                // Advance the battle state to the next turn. At the end of this block, unitInitiatives is sorted with the actor at the front with 100 initiative.
+                // Advance the battle state to the next turn. At the end of this block, the list of unitInitiatives is sorted with the actor at the front with 100 initiative.
                 PrepareInitiative();
                 CalculateTicksToNextTurn();
                 AdvanceTime();
@@ -65,8 +68,9 @@ public class BattleManager : MonoBehaviour
                 GenerateTurnQueue();
                 battleGUI.ReceiveTurnQueue(turnQueue);
 
-                // Tell the actor to act and wait until it says it's done.
+                // Tell the actor to take its turn and wait until it says it's done.
                 UnitStateMachine actor = unitInitiatives[0].unit.GetComponent<UnitStateMachine>();
+
                 actor.turnState = UnitStateMachine.TurnState.Choosing;
                 battleState = BattleState.Idle;
 
@@ -102,12 +106,9 @@ public class BattleManager : MonoBehaviour
         unit.gameObject.GetComponent<PlayerController>().enabled = false;
 
         LoadCombatants();
-
         yield return StartCoroutine(MoveUnitsToMarkers());
 
         battleGUI.enabled = true;
-        battleGUI.heroGUI = BattleGUIManager.HeroGUI.Available;
-
         battleState = BattleState.AdvanceTime;
     }
 
@@ -121,7 +122,7 @@ public class BattleManager : MonoBehaviour
             combatants.Add(hero);
         }
 
-        // Load enemies.
+        // Load enemies within 20 units.
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 20f);
 
         foreach (Collider2D collider in hitColliders) {
@@ -157,7 +158,7 @@ public class BattleManager : MonoBehaviour
     {
         yield return new WaitUntil(() => MoveTick(unit, target));
     }
-    
+
     // Move the unit. Return true when the unit arrives.
     private bool MoveTick(GameObject unit, Vector2 target)
     {

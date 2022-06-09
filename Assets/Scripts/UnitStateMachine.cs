@@ -17,12 +17,10 @@ public class UnitStateMachine : MonoBehaviour
     public TurnState turnState;
 
     public string unitName;
-
     public float currentHP, maxHP, baseATK, currentATK, baseDEF, currentDEF, speed, stateCharge, animationSpeed;
     public int fireTokens, waterTokens, earthTokens, skyTokens;
     public bool dualState, alive, attackStarted;
     public bool animationComplete;
-
     public double initiative;
 
     public List<Attack> attackList = new List<Attack>();
@@ -62,10 +60,17 @@ public class UnitStateMachine : MonoBehaviour
         }
     }
 
+    public void CollectAction(AttackCommand attack)
+    {
+        myAttack = attack;
+        turnState = TurnState.Acting;
+    }
+
     protected virtual void ChooseAction()
     {
         myAttack = new AttackCommand();
         myAttack.target = battleManager.heroesInBattle[Random.Range(0, battleManager.heroesInBattle.Count)];
+        myAttack.chosenAttack = ScriptableObject.CreateInstance<Attack>();
         //myAttack.chosenAttack = attackList[Random.Range(0, attackList.Count)];
 
         turnState = TurnState.Acting;
@@ -96,16 +101,15 @@ public class UnitStateMachine : MonoBehaviour
 
         Vector2 startPosition = transform.position;
 
-        // Calculate a target position to end up 3 units away from the attack target.
+        // Calculate a target position to end up 3 units away from the attack target. Wait until the unit arrives.
         Vector3 direction = (transform.position - myAttack.target.transform.position).normalized;
         Vector3 targetPosition = myAttack.target.transform.position + (3 * direction);
         yield return MoveToTarget(targetPosition);
 
-        // Trigger an animation. Wait by setting an event in the animation to set animationComplete to true.
+        // Trigger an animation. Wait by setting an event in the animation that sets animationComplete true.
         if (animator != null) {
             animator.SetTrigger("Fold");
         }
-        
         animationComplete = false;
         if (animator != null) {
             while (!animationComplete) { yield return null; }

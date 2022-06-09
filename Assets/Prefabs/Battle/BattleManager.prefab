@@ -261,11 +261,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c910792170498014bb5b7564b8942943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesNearby: []
-  turnQueue: []
+  battleState: 0
   heroesInBattle: []
   enemiesInBattle: []
   combatants: []
+  turnQueue: []
 --- !u!114 &8309232979308724313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,6 +278,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbaf75e65b10b1e40be588c52566a477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heroGUI: 0
+  inputPanel: {fileID: 1643253681965130280, guid: 41d5ea24dea82ce41837d1f010d0b3eb, type: 3}
 --- !u!1 &8309232979655184198
 GameObject:
   m_ObjectHideFlags: 0

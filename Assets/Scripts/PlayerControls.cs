@@ -272,9 +272,54 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             ""id"": ""5e314b77-4fdb-4869-8d2d-e1a1aaf9f9a6"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""Confirm"",
                     ""type"": ""Button"",
                     ""id"": ""ef135880-13b7-4814-bd16-5e946667bf89"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""da141bdd-89ee-40fd-934b-f02cd207d6a7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""ecb50a8c-9179-4b63-92a4-cc21e248d3da"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""677c6780-1749-453d-88c7-c9b4576ad48b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""cdb04abc-d2f6-47b4-9a47-be5d4aef72c7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""84ecbe60-f80f-4e57-be1c-df3466adb410"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -285,11 +330,132 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""533621f6-6b3a-486c-aca7-9c8469862d59"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdfa87e7-47b7-48cf-a1b7-e088295d57e3"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea802d5b-5257-46a1-bb37-5cc194a8e691"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b66e5341-7d09-494a-b4d8-f8829aa7cd05"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c6b7079-7d20-4504-aa54-f9b8323a8c32"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""749cbee1-1e0f-407d-9a04-ac9071dbb451"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""686fc61a-868c-4f4e-891b-b0e4b8e9858a"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98d60c2a-a211-4520-aee8-0ce1d9764dce"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""af261541-a415-4d0d-934c-81401896677b"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0433e0cd-4492-4628-bb8f-4ab6d912c972"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cad57136-dd1b-43be-abff-55ad572581dc"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""133266ed-906e-44aa-ba22-2b22a6d79d3a"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -305,7 +471,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Field_Switch = m_Field.FindAction("Switch", throwIfNotFound: true);
         // Battle
         m_Battle = asset.FindActionMap("Battle", throwIfNotFound: true);
-        m_Battle_Newaction = m_Battle.FindAction("New action", throwIfNotFound: true);
+        m_Battle_Confirm = m_Battle.FindAction("Confirm", throwIfNotFound: true);
+        m_Battle_Cancel = m_Battle.FindAction("Cancel", throwIfNotFound: true);
+        m_Battle_Up = m_Battle.FindAction("Up", throwIfNotFound: true);
+        m_Battle_Left = m_Battle.FindAction("Left", throwIfNotFound: true);
+        m_Battle_Right = m_Battle.FindAction("Right", throwIfNotFound: true);
+        m_Battle_Down = m_Battle.FindAction("Down", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -414,12 +585,22 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     // Battle
     private readonly InputActionMap m_Battle;
     private IBattleActions m_BattleActionsCallbackInterface;
-    private readonly InputAction m_Battle_Newaction;
+    private readonly InputAction m_Battle_Confirm;
+    private readonly InputAction m_Battle_Cancel;
+    private readonly InputAction m_Battle_Up;
+    private readonly InputAction m_Battle_Left;
+    private readonly InputAction m_Battle_Right;
+    private readonly InputAction m_Battle_Down;
     public struct BattleActions
     {
         private @PlayerControls m_Wrapper;
         public BattleActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Battle_Newaction;
+        public InputAction @Confirm => m_Wrapper.m_Battle_Confirm;
+        public InputAction @Cancel => m_Wrapper.m_Battle_Cancel;
+        public InputAction @Up => m_Wrapper.m_Battle_Up;
+        public InputAction @Left => m_Wrapper.m_Battle_Left;
+        public InputAction @Right => m_Wrapper.m_Battle_Right;
+        public InputAction @Down => m_Wrapper.m_Battle_Down;
         public InputActionMap Get() { return m_Wrapper.m_Battle; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -429,16 +610,46 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_BattleActionsCallbackInterface != null)
             {
-                @Newaction.started -= m_Wrapper.m_BattleActionsCallbackInterface.OnNewaction;
-                @Newaction.performed -= m_Wrapper.m_BattleActionsCallbackInterface.OnNewaction;
-                @Newaction.canceled -= m_Wrapper.m_BattleActionsCallbackInterface.OnNewaction;
+                @Confirm.started -= m_Wrapper.m_BattleActionsCallbackInterface.OnConfirm;
+                @Confirm.performed -= m_Wrapper.m_BattleActionsCallbackInterface.OnConfirm;
+                @Confirm.canceled -= m_Wrapper.m_BattleActionsCallbackInterface.OnConfirm;
+                @Cancel.started -= m_Wrapper.m_BattleActionsCallbackInterface.OnCancel;
+                @Cancel.performed -= m_Wrapper.m_BattleActionsCallbackInterface.OnCancel;
+                @Cancel.canceled -= m_Wrapper.m_BattleActionsCallbackInterface.OnCancel;
+                @Up.started -= m_Wrapper.m_BattleActionsCallbackInterface.OnUp;
+                @Up.performed -= m_Wrapper.m_BattleActionsCallbackInterface.OnUp;
+                @Up.canceled -= m_Wrapper.m_BattleActionsCallbackInterface.OnUp;
+                @Left.started -= m_Wrapper.m_BattleActionsCallbackInterface.OnLeft;
+                @Left.performed -= m_Wrapper.m_BattleActionsCallbackInterface.OnLeft;
+                @Left.canceled -= m_Wrapper.m_BattleActionsCallbackInterface.OnLeft;
+                @Right.started -= m_Wrapper.m_BattleActionsCallbackInterface.OnRight;
+                @Right.performed -= m_Wrapper.m_BattleActionsCallbackInterface.OnRight;
+                @Right.canceled -= m_Wrapper.m_BattleActionsCallbackInterface.OnRight;
+                @Down.started -= m_Wrapper.m_BattleActionsCallbackInterface.OnDown;
+                @Down.performed -= m_Wrapper.m_BattleActionsCallbackInterface.OnDown;
+                @Down.canceled -= m_Wrapper.m_BattleActionsCallbackInterface.OnDown;
             }
             m_Wrapper.m_BattleActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Newaction.started += instance.OnNewaction;
-                @Newaction.performed += instance.OnNewaction;
-                @Newaction.canceled += instance.OnNewaction;
+                @Confirm.started += instance.OnConfirm;
+                @Confirm.performed += instance.OnConfirm;
+                @Confirm.canceled += instance.OnConfirm;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
+                @Up.started += instance.OnUp;
+                @Up.performed += instance.OnUp;
+                @Up.canceled += instance.OnUp;
+                @Left.started += instance.OnLeft;
+                @Left.performed += instance.OnLeft;
+                @Left.canceled += instance.OnLeft;
+                @Right.started += instance.OnRight;
+                @Right.performed += instance.OnRight;
+                @Right.canceled += instance.OnRight;
+                @Down.started += instance.OnDown;
+                @Down.performed += instance.OnDown;
+                @Down.canceled += instance.OnDown;
             }
         }
     }
@@ -451,6 +662,11 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     }
     public interface IBattleActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnConfirm(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
+        void OnUp(InputAction.CallbackContext context);
+        void OnLeft(InputAction.CallbackContext context);
+        void OnRight(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
     }
 }

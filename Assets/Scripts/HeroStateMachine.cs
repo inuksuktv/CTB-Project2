@@ -6,7 +6,7 @@ public class HeroStateMachine : UnitStateMachine
 {
     protected override void ChooseAction()
     {
-        base.ChooseAction();
-        myAttack.target = battleManager.enemiesInBattle[Random.Range(0, battleManager.enemiesInBattle.Count)];
+        myAttack = new AttackCommand();
+        turnState = TurnState.Idle;
     }
 }
