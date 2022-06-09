@@ -135,6 +135,11 @@ public class BattleManager : MonoBehaviour
             enemiesInBattle.Add(enemy);
             combatants.Add(enemy);
         }
+
+        // Also disable rigidbodies.
+        foreach (GameObject unit in combatants) {
+            Destroy(unit.GetComponent<Rigidbody2D>());
+        }
     }
 
     // Move each unit to its mark. Wait until they've all arrived.

@@ -67,7 +67,6 @@ public class PlayerController : MonoBehaviour
     private void Fold(InputAction.CallbackContext context)
     {
         animator.SetTrigger("Attack");
-        Debug.Log("Fold");
     }
 
     private void Switch(InputAction.CallbackContext context)

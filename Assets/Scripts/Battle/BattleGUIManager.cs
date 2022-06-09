@@ -117,10 +117,9 @@ public class BattleGUIManager : MonoBehaviour
             // Target confirmed. Unit can collect the attack and act.
             TargetInput(targetedUnit);
             activeUnit.GetComponent<UnitStateMachine>().CollectAction(heroChoice);
-            // Clear input panel.
             ClearInputPanels();
-            // Clear targeting GUI. Disable all selectors.
             targetedUnit.transform.Find("Selector").gameObject.SetActive(false);
+            //Disable all selectors?
         }
     }
 
@@ -155,7 +154,7 @@ public class BattleGUIManager : MonoBehaviour
             AttackInput(buttonRT, attack);
         }
         else if (choosingTarget) {
-            // TargetPreviousList();
+            TargetNextList(targetedUnit);
         }
     }
 
@@ -169,7 +168,7 @@ public class BattleGUIManager : MonoBehaviour
             AttackInput(buttonRT, attack);
         }
         else if (choosingTarget) {
-            // TargetPreviousItem();
+            TargetPreviousItem(targetedUnit);
         }
     }
 
@@ -183,7 +182,7 @@ public class BattleGUIManager : MonoBehaviour
             AttackInput(buttonRT, attack);
         }
         else if (choosingTarget) {
-            // TargetNextItem();
+            TargetNextItem(targetedUnit);
         }
     }
 
@@ -197,7 +196,7 @@ public class BattleGUIManager : MonoBehaviour
             AttackInput(buttonRT, attack);
         }
         else if (choosingTarget) {
-            // TargetNextList();
+            TargetNextList(targetedUnit);
         }
     }
 
@@ -331,6 +330,58 @@ public class BattleGUIManager : MonoBehaviour
     {
         heroChoice.target = unit;
         heroChoice.attackTargetName = unit.name;
+    }
+
+    private void TargetNextItem(GameObject currentTarget) 
+    {
+        if (currentTarget.tag == "Hero") {
+            currentTarget.transform.Find("Selector").gameObject.SetActive(false);
+            targetIndex++;
+            targetIndex %= battleManager.heroesInBattle.Count;
+            targetedUnit = battleManager.heroesInBattle[targetIndex];
+            targetedUnit.transform.Find("Selector").gameObject.SetActive(true);
+        }
+        else if (currentTarget.tag == "Enemy") {
+            currentTarget.transform.Find("Selector").gameObject.SetActive(false);
+            targetIndex++;
+            targetIndex %= battleManager.enemiesInBattle.Count;
+            targetedUnit = battleManager.enemiesInBattle[targetIndex];
+            targetedUnit.transform.Find("Selector").gameObject.SetActive(true);
+        }
+    }
+
+    private void TargetNextList(GameObject currentTarget)
+    {
+        if (currentTarget.tag == "Hero") {
+            currentTarget.transform.Find("Selector").gameObject.SetActive(false);
+            targetIndex = 0;
+            targetedUnit = battleManager.enemiesInBattle[targetIndex];
+            targetedUnit.transform.Find("Selector").gameObject.SetActive(true);
+        }
+        else if (currentTarget.tag == "Enemy") {
+            currentTarget.transform.Find("Selector").gameObject.SetActive(false);
+            targetIndex = 0;
+            targetedUnit = battleManager.heroesInBattle[targetIndex];
+            targetedUnit.transform.Find("Selector").gameObject.SetActive(true);
+        }
+    }
+
+    private void TargetPreviousItem(GameObject currentTarget)
+    {
+        if (currentTarget.tag == "Hero") {
+            currentTarget.transform.Find("Selector").gameObject.SetActive(false);
+            targetIndex--;
+            if (targetIndex < 0) { targetIndex = battleManager.heroesInBattle.Count - 1; }
+            targetedUnit = battleManager.heroesInBattle[targetIndex];
+            targetedUnit.transform.Find("Selector").gameObject.SetActive(true);
+        }
+        else if (currentTarget.tag == "Enemy") {
+            currentTarget.transform.Find("Selector").gameObject.SetActive(false);
+            targetIndex--;
+            if (targetIndex < 0) { targetIndex = battleManager.enemiesInBattle.Count - 1; }
+            targetedUnit = battleManager.enemiesInBattle[targetIndex];
+            targetedUnit.transform.Find("Selector").gameObject.SetActive(true);
+        }
     }
 
     private void UpdateButtons()
