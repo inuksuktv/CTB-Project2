@@ -42,7 +42,9 @@ public class BattleGUIManager : MonoBehaviour
 
     // GUI objects.
     private GameObject activePanel;
+    private Transform turnQueueSpacer;
     [SerializeField] private GameObject inputPanel;
+    [SerializeField] private GameObject turnQueuePanel;
 
     List<Button> buttons = new List<Button>();
     public List<Portraits> portraits = new List<Portraits>();
@@ -211,6 +213,7 @@ public class BattleGUIManager : MonoBehaviour
     {
         battleManager = gameObject.GetComponent<BattleManager>();
         canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
+        turnQueueSpacer = canvas.Find("TurnQueueSpacer");
 
         CreateInputPanels();
     }
@@ -235,6 +238,28 @@ public class BattleGUIManager : MonoBehaviour
     {
         int index = 0;
         foreach (Portraits portrait in portraits) {
+            Transform newPanel = Instantiate(turnQueuePanel, turnQueueSpacer).transform;
+
+            Transform icon = newPanel.Find("UnitPortrait");
+            Image newPortrait = icon.GetComponent<Image>();
+            RectTransform newPortraitRT = icon.GetComponent<RectTransform>();
+
+            newPortrait.sprite = portrait.sprite;
+
+            if (index > 0) {
+                newPortraitRT.anchoredPosition += 20 * Vector2.right;
+            }
+
+            double calcProgress = portrait.unit.GetComponent<UnitStateMachine>().initiative / battleManager.turnThreshold;
+
+            if (portrait.duplicate) {
+                calcProgress = 0;
+                newPortraitRT.anchoredPosition += 20 * Vector2.right;
+            }
+
+            Image progressBar = newPanel.Find("ProgressBar").GetComponent<Image>();
+            progressBar.transform.localScale = new Vector3(Mathf.Clamp((float)calcProgress, 0, 1), progressBar.transform.localScale.y, progressBar.transform.localScale.z);
+
             index++;
         }
     }

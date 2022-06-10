@@ -16,17 +16,23 @@ public class BattleManager : MonoBehaviour
     public BattleState battleState;
 
     private BattleGUIManager battleGUI;
+    private RectTransform canvas;
+    [SerializeField] private GameObject turnQueueSpacer;
     private Transform[] battleMarkers;
     private List<GameObject> enemiesNearby = new List<GameObject>();
 
+
+    // Battle combatant lists.
     public List<GameObject> heroesInBattle = new List<GameObject>();
     public List<GameObject> enemiesInBattle = new List<GameObject>();
     public List<GameObject> combatants = new List<GameObject>();
 
+    // Turn logic.
     public CachedInitiative[] unitInitiatives;
     public CachedInitiative[] cacheCopy;
     public List<GameObject> turnQueue = new List<GameObject>();
 
+    // Battle logic knobs.
     public readonly float animationSpeed = 10f;
     public readonly float turnThreshold = 100f;
     public readonly int turnQueueSize = 10;
@@ -42,6 +48,7 @@ public class BattleManager : MonoBehaviour
         }
 
         battleGUI = GetComponent<BattleGUIManager>();
+        canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
         battleState = BattleState.Idle;
     }
 
@@ -108,6 +115,9 @@ public class BattleManager : MonoBehaviour
         // I'm turning off rigidbodies as well so things don't bump into eachother.
         LoadCombatants();
         yield return StartCoroutine(MoveUnitsToMarkers());
+
+        GameObject turnQueue = Instantiate(turnQueueSpacer, canvas);
+        turnQueue.name = "TurnQueueSpacer";
 
         battleGUI.enabled = true;
         battleState = BattleState.AdvanceTime;
