@@ -50,6 +50,54 @@ TextureImporter:
   - first:
       213: 7620319586095514382
     second: sprite-sheet-b-151x100_15
+  - first:
+      213: 1098286324429101383
+    second: Fire_0
+  - first:
+      213: 7419590508823533442
+    second: Fire_1
+  - first:
+      213: 2333874723133794383
+    second: Fire_2
+  - first:
+      213: 6211036013863027259
+    second: Fire_3
+  - first:
+      213: 2168491126659702453
+    second: Fire_4
+  - first:
+      213: 3081219861163341933
+    second: Fire_5
+  - first:
+      213: 519553080483729991
+    second: Fire_6
+  - first:
+      213: 964659150160153652
+    second: Fire_7
+  - first:
+      213: -6879244290724207698
+    second: Fire_8
+  - first:
+      213: 7786682891651826984
+    second: Fire_9
+  - first:
+      213: 4566438268169137410
+    second: Fire_10
+  - first:
+      213: -2935316082851191871
+    second: Fire_11
+  - first:
+      213: 1139766347546768350
+    second: Fire_12
+  - first:
+      213: -3504707368110082297
+    second: Fire_13
+  - first:
+      213: -2272540988029289637
+    second: Fire_14
+  - first:
+      213: 2045966969392695537
+    second: Fire_15
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -151,337 +199,337 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_0
+      name: Fire_0
       rect:
         serializedVersion: 2
         x: 0
         y: 300
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4841b139e870b4840800000000000000
-      internalID: 5209265702918886532
+      spriteID: 7491445d795ed3f00800000000000000
+      internalID: 1098286324429101383
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_1
+      name: Fire_1
       rect:
         serializedVersion: 2
         x: 151
         y: 300
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ed90ca79eff9c820800000000000000
-      internalID: 2939161610087865832
+      spriteID: 2875941d14ea7f660800000000000000
+      internalID: 7419590508823533442
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_2
+      name: Fire_2
       rect:
         serializedVersion: 2
         x: 302
         y: 300
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25b2effaed758e200800000000000000
-      internalID: 209513996619754322
+      spriteID: f4827aef1b6936020800000000000000
+      internalID: 2333874723133794383
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_3
+      name: Fire_3
       rect:
         serializedVersion: 2
         x: 453
         y: 300
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 29376e5d6e5da8a80800000000000000
-      internalID: -8463717362281581678
+      spriteID: b32c67dd858023650800000000000000
+      internalID: 6211036013863027259
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_4
+      name: Fire_4
       rect:
         serializedVersion: 2
         x: 604
         y: 300
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75304c4170a45d110800000000000000
-      internalID: 1285014662957761367
+      spriteID: 5be5327c037081e10800000000000000
+      internalID: 2168491126659702453
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_5
+      name: Fire_5
       rect:
         serializedVersion: 2
         x: 0
         y: 200
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dcba73cae8802afa0800000000000000
-      internalID: -5791056761977328691
+      spriteID: d68f4838321b2ca20800000000000000
+      internalID: 3081219861163341933
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_6
+      name: Fire_6
       rect:
         serializedVersion: 2
         x: 151
         y: 200
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a1b3c9e6857dffd0800000000000000
-      internalID: -2306558211835842138
+      spriteID: 742513426c2d53700800000000000000
+      internalID: 519553080483729991
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_7
+      name: Fire_7
       rect:
         serializedVersion: 2
         x: 302
         y: 200
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd2baa876c6c80930800000000000000
-      internalID: 4109753215705854683
+      spriteID: 43c40a6d268236d00800000000000000
+      internalID: 964659150160153652
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_8
+      name: Fire_8
       rect:
         serializedVersion: 2
         x: 453
         y: 200
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 46a65a3fec65a7a10800000000000000
-      internalID: 1907932838995782244
+      spriteID: ea3ef30f3c30880a0800000000000000
+      internalID: -6879244290724207698
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_9
+      name: Fire_9
       rect:
         serializedVersion: 2
         x: 604
         y: 200
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98660ddafa10dd7e0800000000000000
-      internalID: -1739232027048122743
+      spriteID: 825c48795dadf0c60800000000000000
+      internalID: 7786682891651826984
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_10
+      name: Fire_10
       rect:
         serializedVersion: 2
         x: 0
         y: 100
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f83eb26d2def69c70800000000000000
-      internalID: 8977643088699450255
+      spriteID: 20da8fe296f3f5f30800000000000000
+      internalID: 4566438268169137410
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_11
+      name: Fire_11
       rect:
         serializedVersion: 2
         x: 151
         y: 100
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bacf1e16a3b1044f0800000000000000
-      internalID: -846646792381399893
+      spriteID: 1c3e92a1399a347d0800000000000000
+      internalID: -2935316082851191871
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_12
+      name: Fire_12
       rect:
         serializedVersion: 2
         x: 302
         y: 100
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67302cc652ce46430800000000000000
-      internalID: 3775402033125917558
+      spriteID: ed33870547341df00800000000000000
+      internalID: 1139766347546768350
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_13
+      name: Fire_13
       rect:
         serializedVersion: 2
         x: 453
         y: 100
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 240efff356a3281b0800000000000000
-      internalID: -5655893975484080062
+      spriteID: 707ba1aa737cc5fc0800000000000000
+      internalID: -3504707368110082297
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_14
+      name: Fire_14
       rect:
         serializedVersion: 2
         x: 604
         y: 100
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b9a44d067fb19cae0800000000000000
-      internalID: -1528659849220175205
+      spriteID: b5bbff603005670e0800000000000000
+      internalID: -2272540988029289637
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-151x100_15
+      name: Fire_15
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 151
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e03cc241a40d0c960800000000000000
-      internalID: 7620319586095514382
+      spriteID: 1f885d06e1cb46c10800000000000000
+      internalID: 2045966969392695537
       vertices: []
       indices: 
       edges: []

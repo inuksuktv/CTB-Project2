@@ -77,12 +77,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4327838382736973478, guid: ce72b2a4e3f36154283fea3150d342fb, type: 3}
+  m_Sprite: {fileID: 2410671940745902572, guid: ce72b2a4e3f36154283fea3150d342fb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.49, y: 1}
+  m_Size: {x: 3.890625, y: 1.5625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -156,9 +156,9 @@ BoxCollider2D:
   m_Offset: {x: 0.6940186, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.6, y: 0}
     oldSize: {x: 3.890625, y: 1.5625}
-    newSize: {x: 2.49, y: 1}
+    newSize: {x: 3.890625, y: 1.5625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -199,7 +199,7 @@ MonoBehaviour:
   animationComplete: 0
   initiative: 0
   attackList: []
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 4b0489b92b30a5b4b96780952663c70d, type: 3}
 --- !u!1001 &6197331487378173161
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -217,7 +217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4355266662564193487, guid: cb085de63000caa4090a20fc72e3ac14, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.81
+      value: 1.56
       objectReference: {fileID: 0}
     - target: {fileID: 4355266662564193487, guid: cb085de63000caa4090a20fc72e3ac14, type: 3}
       propertyPath: m_LocalPosition.z

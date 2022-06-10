@@ -122,6 +122,126 @@ TextureImporter:
   - first:
       213: 3322447457733954292
     second: sprite-sheet-b-249x100_39
+  - first:
+      213: 2410671940745902572
+    second: Sky_0
+  - first:
+      213: -5034697430855179653
+    second: Sky_1
+  - first:
+      213: -6075385143875775188
+    second: Sky_2
+  - first:
+      213: 7596160764380411159
+    second: Sky_3
+  - first:
+      213: -7551417194501898685
+    second: Sky_4
+  - first:
+      213: 827277797987302843
+    second: Sky_5
+  - first:
+      213: -3797368470069866874
+    second: Sky_6
+  - first:
+      213: -8230503452430015897
+    second: Sky_7
+  - first:
+      213: -1692089440758696756
+    second: Sky_8
+  - first:
+      213: 8901821185649789169
+    second: Sky_9
+  - first:
+      213: 7721213272108688778
+    second: Sky_10
+  - first:
+      213: -8130776206791237211
+    second: Sky_11
+  - first:
+      213: 8187388571030521137
+    second: Sky_12
+  - first:
+      213: -1769328443631771431
+    second: Sky_13
+  - first:
+      213: -5213211861093524542
+    second: Sky_14
+  - first:
+      213: 570937814000128433
+    second: Sky_15
+  - first:
+      213: 6122409206075928000
+    second: Sky_16
+  - first:
+      213: -3694822798212541651
+    second: Sky_17
+  - first:
+      213: -8653762976590664932
+    second: Sky_18
+  - first:
+      213: 7518671637283277190
+    second: Sky_19
+  - first:
+      213: 7632937261858183746
+    second: Sky_20
+  - first:
+      213: -1138192431480094785
+    second: Sky_21
+  - first:
+      213: 7482816999835491174
+    second: Sky_22
+  - first:
+      213: -4184833242692243799
+    second: Sky_23
+  - first:
+      213: 7808414281539244805
+    second: Sky_24
+  - first:
+      213: -2600965210999029836
+    second: Sky_25
+  - first:
+      213: -3135356327089882199
+    second: Sky_26
+  - first:
+      213: -3297695050227447581
+    second: Sky_27
+  - first:
+      213: 1345183312994142487
+    second: Sky_28
+  - first:
+      213: 4373502386279829834
+    second: Sky_29
+  - first:
+      213: 3671387545930317614
+    second: Sky_30
+  - first:
+      213: -4783310921189222968
+    second: Sky_31
+  - first:
+      213: 4887142916891281084
+    second: Sky_32
+  - first:
+      213: -2491190802983659665
+    second: Sky_33
+  - first:
+      213: -9149992233749541847
+    second: Sky_34
+  - first:
+      213: 7488151004477234879
+    second: Sky_35
+  - first:
+      213: 2702668942359503158
+    second: Sky_36
+  - first:
+      213: -3780452412604562391
+    second: Sky_37
+  - first:
+      213: -4780521869735556760
+    second: Sky_38
+  - first:
+      213: 1711557147171803828
+    second: Sky_39
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -223,841 +343,841 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_0
+      name: Sky_0
       rect:
         serializedVersion: 2
         x: 0
         y: 600
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5169a7bbed60f3c0800000000000000
-      internalID: -4327838382736973478
+      spriteID: ce9392a9b5d647120800000000000000
+      internalID: 2410671940745902572
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_1
+      name: Sky_1
       rect:
         serializedVersion: 2
         x: 249
         y: 600
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f26f9548324b7e60800000000000000
-      internalID: 7961029575761158897
+      spriteID: b722e429c59212ab0800000000000000
+      internalID: -5034697430855179653
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_2
+      name: Sky_2
       rect:
         serializedVersion: 2
         x: 498
         y: 600
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6cfdb21ddfb228810800000000000000
-      internalID: 1766022373018689478
+      spriteID: c2559918665efaba0800000000000000
+      internalID: -6075385143875775188
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_3
+      name: Sky_3
       rect:
         serializedVersion: 2
         x: 747
         y: 600
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c059be2bc1d38bc0800000000000000
-      internalID: -3781948591468621626
+      spriteID: 71577a118fbfa6960800000000000000
+      internalID: 7596160764380411159
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_4
+      name: Sky_4
       rect:
         serializedVersion: 2
         x: 996
         y: 600
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 62fa8281bf47717b0800000000000000
-      internalID: -5253601818513461466
+      spriteID: 34effea121af33790800000000000000
+      internalID: -7551417194501898685
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_5
+      name: Sky_5
       rect:
         serializedVersion: 2
         x: 1245
         y: 600
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 63a22559be87a8cb0800000000000000
-      internalID: -4860939894575191498
+      spriteID: bbdb99f26c41b7b00800000000000000
+      internalID: 827277797987302843
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_6
+      name: Sky_6
       rect:
         serializedVersion: 2
         x: 0
         y: 500
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c68c1ceccfef68da0800000000000000
-      internalID: -5942782296514770836
+      spriteID: 68e873cee790d4bc0800000000000000
+      internalID: -3797368470069866874
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_7
+      name: Sky_7
       rect:
         serializedVersion: 2
         x: 249
         y: 500
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee5c9ddcdb75f1090800000000000000
-      internalID: -8061628335255861778
+      spriteID: 762684397b067cd80800000000000000
+      internalID: -8230503452430015897
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_8
+      name: Sky_8
       rect:
         serializedVersion: 2
         x: 498
         y: 500
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e45377ad33660380800000000000000
-      internalID: -9005401288427219743
+      spriteID: cc473636e9d7488e0800000000000000
+      internalID: -1692089440758696756
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_9
+      name: Sky_9
       rect:
         serializedVersion: 2
         x: 747
         y: 500
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc0c63bf2ea4c6020800000000000000
-      internalID: 2336324645436178636
+      spriteID: 1f8c3b8543f998b70800000000000000
+      internalID: 8901821185649789169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_10
+      name: Sky_10
       rect:
         serializedVersion: 2
         x: 996
         y: 500
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 069557988e1515540800000000000000
-      internalID: 4994863520911022432
+      spriteID: a85e11fef82472b60800000000000000
+      internalID: 7721213272108688778
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_11
+      name: Sky_11
       rect:
         serializedVersion: 2
         x: 1245
         y: 500
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10733445dc61343f0800000000000000
-      internalID: -917864827915651327
+      spriteID: 5a1a20e5e1ea92f80800000000000000
+      internalID: -8130776206791237211
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_12
+      name: Sky_12
       rect:
         serializedVersion: 2
         x: 0
         y: 400
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d26fbb8d8cc25250800000000000000
-      internalID: 5932028567507395289
+      spriteID: 1350e56d6827f9170800000000000000
+      internalID: 8187388571030521137
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_13
+      name: Sky_13
       rect:
         serializedVersion: 2
         x: 249
         y: 400
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 311c9e37e714a44c0800000000000000
-      internalID: -4302554482632703725
+      spriteID: 9d06552a7251277e0800000000000000
+      internalID: -1769328443631771431
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_14
+      name: Sky_14
       rect:
         serializedVersion: 2
         x: 498
         y: 400
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ec81fdd7c8ab7120800000000000000
-      internalID: 2412707601762585830
+      spriteID: 2cbdaa0ee63f6a7b0800000000000000
+      internalID: -5213211861093524542
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_15
+      name: Sky_15
       rect:
         serializedVersion: 2
         x: 747
         y: 400
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 04401e6eeb981fe60800000000000000
-      internalID: 7994322266569638976
+      spriteID: 1b1d058bae06ce700800000000000000
+      internalID: 570937814000128433
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_16
+      name: Sky_16
       rect:
         serializedVersion: 2
         x: 996
         y: 400
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: beb0c8419f4490760800000000000000
-      internalID: 7424541297279241195
+      spriteID: 0cdacb92cba27f450800000000000000
+      internalID: 6122409206075928000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_17
+      name: Sky_17
       rect:
         serializedVersion: 2
         x: 1245
         y: 400
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 20f254d9113560ad0800000000000000
-      internalID: -2736408388462891262
+      spriteID: d23d684bd3a59bcc0800000000000000
+      internalID: -3694822798212541651
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_18
+      name: Sky_18
       rect:
         serializedVersion: 2
         x: 0
         y: 300
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c5d46e52e5c205b40800000000000000
-      internalID: 5426886333855845724
+      spriteID: c1be2e12c68a7e780800000000000000
+      internalID: -8653762976590664932
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_19
+      name: Sky_19
       rect:
         serializedVersion: 2
         x: 249
         y: 300
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd8189d5f19b63c70800000000000000
-      internalID: 8950544853810813148
+      spriteID: 689031bb400b75860800000000000000
+      internalID: 7518671637283277190
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_20
+      name: Sky_20
       rect:
         serializedVersion: 2
         x: 498
         y: 300
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5fc40a990cf77b950800000000000000
-      internalID: 6464776255301504245
+      spriteID: 24a56e5aff3ade960800000000000000
+      internalID: 7632937261858183746
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_21
+      name: Sky_21
       rect:
         serializedVersion: 2
         x: 747
         y: 300
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b3f9af00d04ee7f80800000000000000
-      internalID: -8106791534718181573
+      spriteID: fbf379393045430f0800000000000000
+      internalID: -1138192431480094785
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_22
+      name: Sky_22
       rect:
         serializedVersion: 2
         x: 996
         y: 300
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff76e995c91b83a70800000000000000
-      internalID: 8806984356399572991
+      spriteID: 66bd27a6a6e48d760800000000000000
+      internalID: 7482816999835491174
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_23
+      name: Sky_23
       rect:
         serializedVersion: 2
         x: 1245
         y: 300
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9183a310ae1b8f270800000000000000
-      internalID: 8284567133149083673
+      spriteID: 9ae2515865c7ce5c0800000000000000
+      internalID: -4184833242692243799
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_24
+      name: Sky_24
       rect:
         serializedVersion: 2
         x: 0
         y: 200
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c914a6f530795fa40800000000000000
-      internalID: 5401389368842273180
+      spriteID: 503db361b6f0d5c60800000000000000
+      internalID: 7808414281539244805
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_25
+      name: Sky_25
       rect:
         serializedVersion: 2
         x: 249
         y: 200
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aec8f6beb20f2b6a0800000000000000
-      internalID: -6434816846134801174
+      spriteID: 4bff04dcbe387ebd0800000000000000
+      internalID: -2600965210999029836
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_26
+      name: Sky_26
       rect:
         serializedVersion: 2
         x: 498
         y: 200
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c5bd7af9b8531a30800000000000000
-      internalID: 4184786034552059337
+      spriteID: 9abb887480afc74d0800000000000000
+      internalID: -3135356327089882199
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_27
+      name: Sky_27
       rect:
         serializedVersion: 2
         x: 747
         y: 200
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9075713081cca2440800000000000000
-      internalID: 4911962747104089865
+      spriteID: 3e801a1e2db3c32d0800000000000000
+      internalID: -3297695050227447581
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_28
+      name: Sky_28
       rect:
         serializedVersion: 2
         x: 996
         y: 200
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b5dab5aa97706b150800000000000000
-      internalID: 5887901781964074331
+      spriteID: 7198cc8981d0ba210800000000000000
+      internalID: 1345183312994142487
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_29
+      name: Sky_29
       rect:
         serializedVersion: 2
         x: 1245
         y: 200
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c0a2cdf2c54c35920800000000000000
-      internalID: 2977939678841022988
+      spriteID: a41588e9f3dc1bc30800000000000000
+      internalID: 4373502386279829834
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_30
+      name: Sky_30
       rect:
         serializedVersion: 2
         x: 0
         y: 100
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3444d29d8fa1c3a0800000000000000
-      internalID: -6646838552433507267
+      spriteID: e2f38fb658363f230800000000000000
+      internalID: 3671387545930317614
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_31
+      name: Sky_31
       rect:
         serializedVersion: 2
         x: 249
         y: 100
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c40367c62c8579d0800000000000000
-      internalID: -2777159497022241594
+      spriteID: 8c5154c6f044e9db0800000000000000
+      internalID: -4783310921189222968
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_32
+      name: Sky_32
       rect:
         serializedVersion: 2
         x: 498
         y: 100
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9d320d739732da80800000000000000
-      internalID: -8443625244769239650
+      spriteID: cb60fd7f69e92d340800000000000000
+      internalID: 4887142916891281084
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_33
+      name: Sky_33
       rect:
         serializedVersion: 2
         x: 747
         y: 100
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d67b538cbd6c58a30800000000000000
-      internalID: 4216995273361438573
+      spriteID: f675070e9238d6dd0800000000000000
+      internalID: -2491190802983659665
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_34
+      name: Sky_34
       rect:
         serializedVersion: 2
         x: 996
         y: 100
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e9ccc9ba967ec9a0800000000000000
-      internalID: -6210896429183088157
+      spriteID: 92c86c9ca82b40180800000000000000
+      internalID: -9149992233749541847
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_35
+      name: Sky_35
       rect:
         serializedVersion: 2
         x: 1245
         y: 100
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ffdd71dccefffe910800000000000000
-      internalID: 1868993762900303359
+      spriteID: fbe99562aa14be760800000000000000
+      internalID: 7488151004477234879
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_36
+      name: Sky_36
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 049049f10a0b54c50800000000000000
-      internalID: 6648914626653456704
+      spriteID: 631a1de651fc18520800000000000000
+      internalID: 2702668942359503158
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_37
+      name: Sky_37
       rect:
         serializedVersion: 2
         x: 249
         y: 0
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ad6d9af57fa9505e0800000000000000
-      internalID: -1943977276887935270
+      spriteID: 924cf687f82298bc0800000000000000
+      internalID: -3780452412604562391
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_38
+      name: Sky_38
       rect:
         serializedVersion: 2
         x: 498
         y: 0
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c431d78553ff4860800000000000000
-      internalID: 7516493851781051590
+      spriteID: 8690d6110bc28adb0800000000000000
+      internalID: -4780521869735556760
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-b-249x100_39
+      name: Sky_39
       rect:
         serializedVersion: 2
         x: 747
         y: 0
         width: 249
         height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4fac1271c54bb1e20800000000000000
-      internalID: 3322447457733954292
+      spriteID: 4b2d4f9382ca0c710800000000000000
+      internalID: 1711557147171803828
       vertices: []
       indices: 
       edges: []

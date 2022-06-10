@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class BattleGUIManager : MonoBehaviour
 {
+    #region "Variables"
     public enum HeroGUI
     {
         Idle,
@@ -46,8 +47,9 @@ public class BattleGUIManager : MonoBehaviour
     List<Button> buttons = new List<Button>();
     public List<Portraits> portraits = new List<Portraits>();
     private List<GameObject> inputPanels = new List<GameObject>();
+    #endregion
 
-
+    #region "Awake, OnEnable, and OnDisable"
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager");
@@ -99,6 +101,10 @@ public class BattleGUIManager : MonoBehaviour
 
         if (playerInput != null) { playerInput.actions.FindActionMap("Battle").Disable(); }
     }
+    #endregion
+
+    // All these inputs should be refactored into a state machine. Setting flags to change state is garbage.
+    #region "InputFunctions"
 
     private void Confirm(InputAction.CallbackContext context)
     {
@@ -119,7 +125,7 @@ public class BattleGUIManager : MonoBehaviour
             activeUnit.GetComponent<UnitStateMachine>().CollectAction(heroChoice);
             ClearInputPanels();
             targetedUnit.transform.Find("Selector").gameObject.SetActive(false);
-            //Disable all selectors?
+            //Disable all selectors too?
         }
     }
 
@@ -154,7 +160,7 @@ public class BattleGUIManager : MonoBehaviour
             AttackInput(buttonRT, attack);
         }
         else if (choosingTarget) {
-            TargetNextList(targetedUnit);
+            TargetNextTeam(targetedUnit);
         }
     }
 
@@ -196,9 +202,10 @@ public class BattleGUIManager : MonoBehaviour
             AttackInput(buttonRT, attack);
         }
         else if (choosingTarget) {
-            TargetNextList(targetedUnit);
+            TargetNextTeam(targetedUnit);
         }
     }
+    #endregion
 
     void Start()
     {
@@ -299,7 +306,8 @@ public class BattleGUIManager : MonoBehaviour
             newPanel.SetActive(false);
             inputPanels.Add(newPanel);
 
-            Vector2 screenPoint = Camera.main.WorldToScreenPoint(hero.transform.position);
+            Vector3 offset = 0.7f * Vector3.up;
+            Vector2 screenPoint = Camera.main.WorldToScreenPoint(hero.transform.position + offset);
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas, screenPoint, null, out Vector2 canvasPoint);
             newPanel.GetComponent<RectTransform>().localPosition = canvasPoint;
         }
@@ -350,7 +358,7 @@ public class BattleGUIManager : MonoBehaviour
         }
     }
 
-    private void TargetNextList(GameObject currentTarget)
+    private void TargetNextTeam(GameObject currentTarget)
     {
         if (currentTarget.tag == "Hero") {
             currentTarget.transform.Find("Selector").gameObject.SetActive(false);
@@ -396,7 +404,8 @@ public class BattleGUIManager : MonoBehaviour
             Attack attack = ScriptableObject.CreateInstance<Attack>();
             /*Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[index];
             buttonText.text = attack.attackName;
-            buttonImage.sprite = attack.buttonSprite;*/
+            buttonImage.sprite = attack.buttonSprite;
+            index++*/
         }
     }
 }

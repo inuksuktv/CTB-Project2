@@ -105,6 +105,7 @@ public class BattleManager : MonoBehaviour
 
         unit.gameObject.GetComponent<PlayerController>().enabled = false;
 
+        // I'm turning off rigidbodies as well so things don't bump into eachother.
         LoadCombatants();
         yield return StartCoroutine(MoveUnitsToMarkers());
 
@@ -136,7 +137,7 @@ public class BattleManager : MonoBehaviour
             combatants.Add(enemy);
         }
 
-        // Also disable rigidbodies.
+        // Also disable rigidbodies?
         foreach (GameObject unit in combatants) {
             Destroy(unit.GetComponent<Rigidbody2D>());
         }
@@ -245,7 +246,7 @@ public class BattleManager : MonoBehaviour
                 return a.ticksToNextTurn.CompareTo(b.ticksToNextTurn);
             });
 
-            // Advance to the next turn.
+            // Advance initiative to the next turn.
             if (cacheCopy[0].initiative >= turnThreshold) { continue; }
             else {
                 double ticksToAdvance = cacheCopy[0].ticksToNextTurn;
