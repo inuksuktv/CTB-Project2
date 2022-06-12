@@ -56,6 +56,60 @@ TextureImporter:
   - first:
       213: 5028331865891781917
     second: sprite-sheet-240x104_17
+  - first:
+      213: 6423806749927177598
+    second: Earth_0
+  - first:
+      213: -3086602609980112195
+    second: Earth_1
+  - first:
+      213: 6924314980402435031
+    second: Earth_2
+  - first:
+      213: 8294369937034324297
+    second: Earth_3
+  - first:
+      213: 5955687731921373103
+    second: Earth_4
+  - first:
+      213: 7385045655152147662
+    second: Earth_5
+  - first:
+      213: -7412046891123592334
+    second: Earth_6
+  - first:
+      213: 3775956329943443878
+    second: Earth_7
+  - first:
+      213: -1479756206100183629
+    second: Earth_8
+  - first:
+      213: -6314728025926759367
+    second: Earth_9
+  - first:
+      213: 1892821218243490644
+    second: Earth_10
+  - first:
+      213: 7902158703860476486
+    second: Earth_11
+  - first:
+      213: -5289550111512436940
+    second: Earth_12
+  - first:
+      213: 8917927153200763621
+    second: Earth_13
+  - first:
+      213: -2524328396890630821
+    second: Earth_14
+  - first:
+      213: -5332350200267198914
+    second: Earth_15
+  - first:
+      213: 5361631257420472715
+    second: Earth_16
+  - first:
+      213: 1228465305477970562
+    second: Earth_17
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -157,379 +211,379 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sprite-sheet-240x104_0
+      name: Earth_0
       rect:
         serializedVersion: 2
         x: 0
         y: 312
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34a78c7e582e0aa30800000000000000
-      internalID: 4224625515220728387
+      spriteID: e7d7a2b4432f52950800000000000000
+      internalID: 6423806749927177598
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_1
+      name: Earth_1
       rect:
         serializedVersion: 2
         x: 240
         y: 312
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 93f4efe6c60755b30800000000000000
-      internalID: 4275447032279093049
+      spriteID: db2875d974f2a25d0800000000000000
+      internalID: -3086602609980112195
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_2
+      name: Earth_2
       rect:
         serializedVersion: 2
         x: 480
         y: 312
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9ec95aaa8a5845a0800000000000000
-      internalID: -6536875307518275940
+      spriteID: 7d39dcfb9cb181060800000000000000
+      internalID: 6924314980402435031
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_3
+      name: Earth_3
       rect:
         serializedVersion: 2
         x: 720
         y: 312
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d24ebc63b3a5e560800000000000000
-      internalID: 7342454758516343504
+      spriteID: 9492c9423858b1370800000000000000
+      internalID: 8294369937034324297
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_4
+      name: Earth_4
       rect:
         serializedVersion: 2
         x: 960
         y: 312
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1111a0630213f6600800000000000000
-      internalID: 463643301057794321
+      spriteID: fa74356007ad6a250800000000000000
+      internalID: 5955687731921373103
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_5
+      name: Earth_5
       rect:
         serializedVersion: 2
         x: 0
         y: 208
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 696c352ba60d49240800000000000000
-      internalID: 4797688659733366422
+      spriteID: eccb26d45e3fc7660800000000000000
+      internalID: 7385045655152147662
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_6
+      name: Earth_6
       rect:
         serializedVersion: 2
         x: 240
         y: 208
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 433f4fa4ace67a840800000000000000
-      internalID: 5235274906961507124
+      spriteID: 2733a0c8f9e132990800000000000000
+      internalID: -7412046891123592334
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_7
+      name: Earth_7
       rect:
         serializedVersion: 2
         x: 480
         y: 208
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9650e90d543061a50800000000000000
-      internalID: 6491379511288792425
+      spriteID: 6a9aaa5b644e66430800000000000000
+      internalID: 3775956329943443878
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_8
+      name: Earth_8
       rect:
         serializedVersion: 2
         x: 720
         y: 208
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 536b97fb9559ccde0800000000000000
-      internalID: -1311509178774604235
+      spriteID: 3b508351299d67be0800000000000000
+      internalID: -1479756206100183629
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_9
+      name: Earth_9
       rect:
         serializedVersion: 2
         x: 960
         y: 208
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8956b030677861de0800000000000000
-      internalID: -1362752896306027112
+      spriteID: 93c8e6931549d58a0800000000000000
+      internalID: -6314728025926759367
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_10
+      name: Earth_10
       rect:
         serializedVersion: 2
         x: 0
         y: 104
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03e34e873974d25d0800000000000000
-      internalID: -3085731470964933072
+      spriteID: 453b9b09ed6a44a10800000000000000
+      internalID: 1892821218243490644
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_11
+      name: Earth_11
       rect:
         serializedVersion: 2
         x: 240
         y: 104
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 31b4d7cd136d24f30800000000000000
-      internalID: 4558441282493303571
+      spriteID: 64a6d56497b1aad60800000000000000
+      internalID: 7902158703860476486
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_12
+      name: Earth_12
       rect:
         serializedVersion: 2
         x: 480
         y: 104
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9609d217b34bfbbc0800000000000000
-      internalID: -3765092596063563671
+      spriteID: 43f5ca5e23eb796b0800000000000000
+      internalID: -5289550111512436940
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_13
+      name: Earth_13
       rect:
         serializedVersion: 2
         x: 720
         y: 104
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ae09bfefa4aef4b0800000000000000
-      internalID: -5404701427249901920
+      spriteID: 5e297532f77d2cb70800000000000000
+      internalID: 8917927153200763621
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_14
+      name: Earth_14
       rect:
         serializedVersion: 2
         x: 960
         y: 104
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 819d0fd3ac3b0c270800000000000000
-      internalID: 8268806597056190744
+      spriteID: b5517ee82b8c7fcd0800000000000000
+      internalID: -2524328396890630821
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_15
+      name: Earth_15
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1c26426e9df09010800000000000000
-      internalID: 1193732757948607517
+      spriteID: e3e271faebfaff5b0800000000000000
+      internalID: -5332350200267198914
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_16
+      name: Earth_16
       rect:
         serializedVersion: 2
         x: 240
         y: 0
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c65e31aa749b0370800000000000000
-      internalID: 8289882793517668037
+      spriteID: b81ad23b837586a40800000000000000
+      internalID: 5361631257420472715
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite-sheet-240x104_17
+      name: Earth_17
       rect:
         serializedVersion: 2
         x: 480
         y: 0
         width: 240
         height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.575, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1db147d03938c540800000000000000
-      internalID: 5028331865891781917
+      spriteID: 28af7e7cfa26c0110800000000000000
+      internalID: 1228465305477970562
       vertices: []
       indices: 
       edges: []

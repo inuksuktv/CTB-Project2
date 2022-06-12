@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8309232978424229015}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.46, y: 1.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8309232979308724312}
@@ -84,7 +84,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8309232978562221022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: -3, z: 0}
+  m_LocalPosition: {x: 1.5, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8309232979308724312}
@@ -144,7 +144,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8309232978980721122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5, y: -3, z: 0}
+  m_LocalPosition: {x: -1.5, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8309232979308724312}
@@ -174,7 +174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8309232979187585386}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.5, y: -2, z: 0}
+  m_LocalPosition: {x: 4.25, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8309232979308724312}
@@ -261,11 +261,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c910792170498014bb5b7564b8942943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesNearby: []
-  turnQueue: []
+  battleState: 0
+  turnQueueSpacer: {fileID: 2935891131504652293, guid: 7b079a99a9a9fd64fb17cbda5f525e18, type: 3}
+  enemyPortraits:
+  - {fileID: 21300000, guid: 5aecc3db379234b429669cafb4b13c60, type: 3}
+  - {fileID: 21300000, guid: 527cf266c261c1a46a14109c75ff210f, type: 3}
+  - {fileID: 21300000, guid: 1e3ad28d0f33b1843a3b6392e43e5fd8, type: 3}
+  - {fileID: 21300000, guid: ae6d2ce48666eae4fa6ea4f3a795e42c, type: 3}
+  - {fileID: 21300000, guid: 63581b13bf815e94c9f14a0bfc858bbe, type: 3}
+  - {fileID: 21300000, guid: 4625db275ddc74a4aa260ea9585c1405, type: 3}
   heroesInBattle: []
   enemiesInBattle: []
   combatants: []
+  turnQueue: []
 --- !u!114 &8309232979308724313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,6 +286,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbaf75e65b10b1e40be588c52566a477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heroGUI: 0
+  inputPanel: {fileID: 1643253681965130280, guid: 41d5ea24dea82ce41837d1f010d0b3eb, type: 3}
+  turnQueuePanel: {fileID: 3011818618887334261, guid: e42b30f8d037264409d4d77177dc7c41, type: 3}
 --- !u!1 &8309232979655184198
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +313,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8309232979655184198}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.97, z: 0}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8309232979308724312}
@@ -362,7 +373,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8309232979744518115}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.5, y: -2, z: 0}
+  m_LocalPosition: {x: -4.25, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8309232979308724312}
@@ -392,7 +403,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8309232979879006934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.22, y: 1.86, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8309232979308724312}
