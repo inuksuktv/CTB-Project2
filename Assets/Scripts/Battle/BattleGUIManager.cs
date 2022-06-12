@@ -332,6 +332,32 @@ public class BattleGUIManager : MonoBehaviour
             GameObject newPanel = Instantiate(inputPanel, canvas.transform);
             newPanel.name = hero.name + "Panel";
 
+            if(hero.name == "Fire") {
+                foreach (Transform child in newPanel.transform) {
+                    Image arrow = child.Find("Arrow").GetComponent<Image>();
+                    arrow.color = new Color(255f/255f, 68f/255f, 70f / 255f);
+                }
+            }
+            else if (hero.name == "Water") {
+                foreach (Transform child in newPanel.transform) {
+                    Image arrow = child.Find("Arrow").GetComponent<Image>();
+                    Debug.Log(arrow.color);
+                    arrow.color = new Color(80f / 255f, 134f / 255f, 154f / 255f);
+                }
+            }
+            else if (hero.name == "Earth") {
+                foreach (Transform child in newPanel.transform) {
+                    Image arrow = child.Find("Arrow").GetComponent<Image>();
+                    arrow.color = new Color(211f / 255f, 109f / 255f, 79f / 255f);
+                }
+            }
+            else if (hero.name == "Sky") {
+                foreach (Transform child in newPanel.transform) {
+                    Image arrow = child.Find("Arrow").GetComponent<Image>();
+                    arrow.color = new Color(112f / 255f, 159f / 255f, 69f / 255f);
+                }
+            }
+
             newPanel.SetActive(false);
             inputPanels.Add(newPanel);
 

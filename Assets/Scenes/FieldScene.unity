@@ -10822,6 +10822,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ef135880-13b7-4814-bd16-5e946667bf89
     m_ActionName: Battle/New action
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: da141bdd-89ee-40fd-934b-f02cd207d6a7
+    m_ActionName: Battle/Cancel[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ecb50a8c-9179-4b63-92a4-cc21e248d3da
+    m_ActionName: Battle/Up[/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 677c6780-1749-453d-88c7-c9b4576ad48b
+    m_ActionName: Battle/Left[/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cdb04abc-d2f6-47b4-9a47-be5d4aef72c7
+    m_ActionName: Battle/Right[/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 84ecbe60-f80f-4e57-be1c-df3466adb410
+    m_ActionName: Battle/Down[/Keyboard/s]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Field
