@@ -18,6 +18,7 @@ public class BattleManager : MonoBehaviour
     private BattleGUIManager battleGUI;
     private RectTransform canvas;
     [SerializeField] private GameObject turnQueueSpacer;
+    [SerializeField] private Sprite[] enemyPortraits;
     private Transform[] battleMarkers;
     private List<GameObject> enemiesNearby = new List<GameObject>();
 
@@ -142,9 +143,13 @@ public class BattleManager : MonoBehaviour
             }
         }
 
+        int index = 0;
         foreach (GameObject enemy in enemiesNearby) {
             enemiesInBattle.Add(enemy);
             combatants.Add(enemy);
+
+            enemy.GetComponent<UnitStateMachine>().portrait = enemyPortraits[index];
+            index++;
         }
 
         // Also disable rigidbodies?

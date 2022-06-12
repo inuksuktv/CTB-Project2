@@ -198,7 +198,11 @@ MonoBehaviour:
   attackStarted: 0
   animationComplete: 0
   initiative: 0
-  attackList: []
+  attackList:
+  - {fileID: 11400000, guid: d78b9ddc8b4dd3c44b598c564dbaeb26, type: 2}
+  - {fileID: 11400000, guid: 327399d2e9efb5a408e772b744c597c7, type: 2}
+  - {fileID: 11400000, guid: fcbb810b3d9f0da4c97ad37ff29d7d8a, type: 2}
+  - {fileID: 11400000, guid: 9aec82e0f6e4145419598390db11e28b, type: 2}
   portrait: {fileID: 21300000, guid: 4b0489b92b30a5b4b96780952663c70d, type: 3}
 --- !u!1001 &6197331487378173161
 PrefabInstance:
@@ -213,7 +217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4355266662564193487, guid: cb085de63000caa4090a20fc72e3ac14, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.33
+      value: -0.06
       objectReference: {fileID: 0}
     - target: {fileID: 4355266662564193487, guid: cb085de63000caa4090a20fc72e3ac14, type: 3}
       propertyPath: m_LocalPosition.y

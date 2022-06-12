@@ -198,7 +198,11 @@ MonoBehaviour:
   attackStarted: 0
   animationComplete: 0
   initiative: 0
-  attackList: []
+  attackList:
+  - {fileID: 11400000, guid: 4cd1ead43c0f1684cae28a6e1553dc10, type: 2}
+  - {fileID: 11400000, guid: 08e482abdbdd68941955876aec83564d, type: 2}
+  - {fileID: 11400000, guid: 7ac3fcdc4ca3a034ea1e6a4fee3fc797, type: 2}
+  - {fileID: 11400000, guid: 55ae576f2fe3b83439c64b9721c200ec, type: 2}
   portrait: {fileID: 21300000, guid: 5c38e2bad310a3e40a0df734f9375981, type: 3}
 --- !u!1001 &6898101604604187442
 PrefabInstance:

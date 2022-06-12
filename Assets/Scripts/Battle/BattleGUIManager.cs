@@ -236,6 +236,10 @@ public class BattleGUIManager : MonoBehaviour
 
     private void AddPortraitsToGUI()
     {
+        foreach (Transform child in turnQueueSpacer) {
+            Destroy(child.gameObject);
+        }
+
         int index = 0;
         foreach (Portraits portrait in portraits) {
             Transform newPanel = Instantiate(turnQueuePanel, turnQueueSpacer).transform;
@@ -247,17 +251,17 @@ public class BattleGUIManager : MonoBehaviour
             newPortrait.sprite = portrait.sprite;
 
             if (index > 0) {
-                newPortraitRT.anchoredPosition += 20 * Vector2.right;
+                newPortraitRT.anchoredPosition += 30 * Vector2.right;
             }
 
             double calcProgress = portrait.unit.GetComponent<UnitStateMachine>().initiative / battleManager.turnThreshold;
 
             if (portrait.duplicate) {
                 calcProgress = 0;
-                newPortraitRT.anchoredPosition += 20 * Vector2.right;
+                newPortraitRT.anchoredPosition += 30 * Vector2.right;
             }
 
-            Image progressBar = newPanel.Find("ProgressBar").GetComponent<Image>();
+            GameObject progressBar = newPanel.GetComponentInChildren<Mask>().gameObject;
             progressBar.transform.localScale = new Vector3(Mathf.Clamp((float)calcProgress, 0, 1), progressBar.transform.localScale.y, progressBar.transform.localScale.z);
 
             index++;
@@ -421,16 +425,15 @@ public class BattleGUIManager : MonoBehaviour
     {
         buttons = new List<Button>(activePanel.GetComponentsInChildren<Button>());
 
-        //int index = 0;
+        int index = 0;
         foreach (Button button in buttons) {
             Text buttonText = button.transform.Find("Text").GetComponent<Text>();
             Image buttonImage = button.GetComponent<Image>();
 
-            Attack attack = ScriptableObject.CreateInstance<Attack>();
-            /*Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[index];
+            Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[index];
             buttonText.text = attack.attackName;
             buttonImage.sprite = attack.buttonSprite;
-            index++*/
+            index++;
         }
     }
 }
