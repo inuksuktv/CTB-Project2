@@ -76,9 +76,8 @@ public class BattleManager : MonoBehaviour
                 GenerateTurnQueue();
                 battleGUI.ReceiveTurnQueue(turnQueue);
 
-                // Tell the actor to take its turn and wait until it says it's done.
+                // Tell the actor to take its turn. Wait until it says it's done.
                 UnitStateMachine actor = unitInitiatives[0].unit.GetComponent<UnitStateMachine>();
-
                 actor.turnState = UnitStateMachine.TurnState.Choosing;
                 battleState = BattleState.Idle;
 

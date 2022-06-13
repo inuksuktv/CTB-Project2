@@ -332,16 +332,16 @@ public class BattleGUIManager : MonoBehaviour
             GameObject newPanel = Instantiate(inputPanel, canvas.transform);
             newPanel.name = hero.name + "Panel";
 
+            // Set arrow colours based on unit name.
             if(hero.name == "Fire") {
                 foreach (Transform child in newPanel.transform) {
                     Image arrow = child.Find("Arrow").GetComponent<Image>();
-                    arrow.color = new Color(255f/255f, 68f/255f, 70f / 255f);
+                    arrow.color = new Color(1, 0, 0);
                 }
             }
             else if (hero.name == "Water") {
                 foreach (Transform child in newPanel.transform) {
                     Image arrow = child.Find("Arrow").GetComponent<Image>();
-                    Debug.Log(arrow.color);
                     arrow.color = new Color(80f / 255f, 134f / 255f, 154f / 255f);
                 }
             }

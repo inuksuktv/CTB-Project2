@@ -76,6 +76,28 @@ public class UnitStateMachine : MonoBehaviour
         turnState = TurnState.Acting;
     }
 
+    private void DoDamage()
+    {
+        UnitStateMachine attacker = GetComponent<UnitStateMachine>();
+        UnitStateMachine defender = myAttack.target.GetComponent<UnitStateMachine>();
+
+        // Look for any special handling before the attack. Evade or Guard for example.
+        
+        // Apply or remove tokens.
+
+        // Calculate raw attack damage. 
+
+        // Defender mitigates.
+
+        // Post-mitigation effects.
+
+        // Deal damage.
+
+        // Set status.
+
+        // Anything else?
+    }
+
     private IEnumerator MoveToTarget(Vector2 target)
     {
         yield return new WaitUntil(() => MoveTick(target));
@@ -115,11 +137,9 @@ public class UnitStateMachine : MonoBehaviour
             while (!animationComplete) { yield return null; }
         }
 
-        // DoDomage() {}
+        DoDamage();
 
         initiative -= battleManager.turnThreshold;
-
-        yield return new WaitForSeconds(0.1f);
 
         yield return MoveToTarget(startPosition);
 

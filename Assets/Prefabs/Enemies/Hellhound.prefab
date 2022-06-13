@@ -157,7 +157,8 @@ MonoBehaviour:
   attackStarted: 0
   animationComplete: 0
   initiative: 0
-  attackList: []
+  attackList:
+  - {fileID: 11400000, guid: ab615be7358f20b4abaa200bc28cb91f, type: 2}
   portrait: {fileID: 0}
 --- !u!50 &-3364178073172376151
 Rigidbody2D:
