@@ -6,7 +6,7 @@ public class HeroStateMachine : UnitStateMachine
 {
     protected override void ChooseAction()
     {
-        myAttack = new AttackCommand();
+        myAttack = ScriptableObject.CreateInstance<AttackCommand>();
         turnState = TurnState.Idle;
     }
 }

@@ -7,6 +7,30 @@ public class Attack : ScriptableObject
 {
     public string attackName, description;
     public int fireTokens, waterTokens, earthTokens, skyTokens;
-    public float attackDamage, stateCharge;
+    public float damage, stateCharge;
     public Sprite buttonSprite;
+
+    public enum TargetMode
+    {
+        Enemies,
+        Heroes,
+        Self,
+        Other
+    }
+    public TargetMode targetMode;
+
+    public enum DamageMode
+    {
+        Damage,
+        Heal,
+        Other
+    }
+    public DamageMode damageMode;
+
+    public enum SetStatus
+    {
+        None,
+        Evasion,
+    }
+    public SetStatus setStatus;
 }

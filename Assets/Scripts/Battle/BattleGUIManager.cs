@@ -38,7 +38,7 @@ public class BattleGUIManager : MonoBehaviour
     private GameObject targetedUnit;
     private int targetIndex;
     private List<GameObject> targetedTeam;
-    private AttackCommand heroChoice;
+    public AttackCommand heroChoice;
 
     // GUI objects.
     private GameObject activePanel;
@@ -105,7 +105,7 @@ public class BattleGUIManager : MonoBehaviour
     }
     #endregion
 
-    // All these inputs should be refactored into a state machine. Setting flags to change state is garbage.
+    // All these inputs should be refactored using a state machine. Setting flags to change state is garbage.
     #region "InputFunctions"
 
     private void Confirm(InputAction.CallbackContext context)
@@ -157,8 +157,7 @@ public class BattleGUIManager : MonoBehaviour
         Debug.Log("Up");
         if (choosingAbility) {
             RectTransform buttonRT = buttons[0].GetComponent<RectTransform>();
-            Attack attack = ScriptableObject.CreateInstance<Attack>();
-            // Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[0];
+            Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[0];
             AttackInput(buttonRT, attack);
         }
         else if (choosingTarget) {
@@ -171,8 +170,7 @@ public class BattleGUIManager : MonoBehaviour
         Debug.Log("Left");
         if (choosingAbility) {
             RectTransform buttonRT = buttons[1].GetComponent<RectTransform>();
-            Attack attack = ScriptableObject.CreateInstance<Attack>();
-            // Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[1];
+            Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[1];
             AttackInput(buttonRT, attack);
         }
         else if (choosingTarget) {
@@ -185,8 +183,7 @@ public class BattleGUIManager : MonoBehaviour
         Debug.Log("Right");
         if (choosingAbility) {
             RectTransform buttonRT = buttons[2].GetComponent<RectTransform>();
-            Attack attack = ScriptableObject.CreateInstance<Attack>();
-            // Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[2];
+            Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[2];
             AttackInput(buttonRT, attack);
         }
         else if (choosingTarget) {
@@ -199,8 +196,7 @@ public class BattleGUIManager : MonoBehaviour
         Debug.Log("Down");
         if (choosingAbility) {
             RectTransform buttonRT = buttons[3].GetComponent<RectTransform>();
-            Attack attack = ScriptableObject.CreateInstance<Attack>();
-            // Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[3];
+            Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[3];
             AttackInput(buttonRT, attack);
         }
         else if (choosingTarget) {
@@ -270,13 +266,19 @@ public class BattleGUIManager : MonoBehaviour
 
     private void AttackInput(Transform button, Attack attack)
     {
-        heroChoice = new AttackCommand
-        {
-            attackerName = activeUnit.name,
-            description = attack.description,
-            chosenAttack = attack,
-            attacker = activeUnit
-        };
+        heroChoice = ScriptableObject.CreateInstance<AttackCommand>();
+        heroChoice.attacker = activeUnit;
+        heroChoice.attackName = attack.attackName;
+        heroChoice.description = attack.description;
+        heroChoice.fireTokens = attack.fireTokens;
+        heroChoice.waterTokens = attack.waterTokens;
+        heroChoice.earthTokens = attack.earthTokens;
+        heroChoice.skyTokens = attack.skyTokens;
+        heroChoice.damage = attack.damage;
+        heroChoice.stateCharge = attack.stateCharge;
+        heroChoice.targetMode = attack.targetMode;
+        heroChoice.damageMode = attack.damageMode;
+        heroChoice.setStatus = attack.setStatus;
 
         // Send the description to the infobox.
 
@@ -333,7 +335,7 @@ public class BattleGUIManager : MonoBehaviour
             newPanel.name = hero.name + "Panel";
 
             // Set arrow colours based on unit name.
-            if(hero.name == "Fire") {
+            if (hero.name == "Fire") {
                 foreach (Transform child in newPanel.transform) {
                     Image arrow = child.Find("Arrow").GetComponent<Image>();
                     arrow.color = new Color(1, 0, 0);
@@ -392,7 +394,6 @@ public class BattleGUIManager : MonoBehaviour
     private void TargetInput(GameObject unit)
     {
         heroChoice.target = unit;
-        heroChoice.attackTargetName = unit.name;
     }
 
     private void TargetNextItem(GameObject currentTarget) 

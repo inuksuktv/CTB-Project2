@@ -23,6 +23,8 @@ public class UnitStateMachine : MonoBehaviour
     public bool animationComplete;
     public double initiative;
 
+    public bool isEvading;
+
     public List<Attack> attackList = new List<Attack>();
     public AttackCommand myAttack;
     public Sprite portrait;
@@ -68,10 +70,21 @@ public class UnitStateMachine : MonoBehaviour
 
     protected virtual void ChooseAction()
     {
-        myAttack = new AttackCommand();
+        Attack attack = attackList[Random.Range(0, attackList.Count)];
+        myAttack = ScriptableObject.CreateInstance<AttackCommand>();
+        myAttack.attacker = gameObject;
         myAttack.target = battleManager.heroesInBattle[Random.Range(0, battleManager.heroesInBattle.Count)];
-        myAttack.chosenAttack = ScriptableObject.CreateInstance<Attack>();
-        //myAttack.chosenAttack = attackList[Random.Range(0, attackList.Count)];
+        myAttack.attackName = attack.attackName;
+        myAttack.description = attack.description;
+        myAttack.fireTokens = attack.fireTokens;
+        myAttack.waterTokens = attack.waterTokens;
+        myAttack.earthTokens = attack.earthTokens;
+        myAttack.skyTokens = attack.skyTokens;
+        myAttack.damage = attack.damage;
+        myAttack.stateCharge = attack.stateCharge;
+        myAttack.targetMode = attack.targetMode;
+        myAttack.damageMode = attack.damageMode;
+        myAttack.setStatus = attack.setStatus;
 
         turnState = TurnState.Acting;
     }
@@ -82,6 +95,13 @@ public class UnitStateMachine : MonoBehaviour
         UnitStateMachine defender = myAttack.target.GetComponent<UnitStateMachine>();
 
         // Look for any special handling before the attack. Evade or Guard for example.
+        if (defender.isEvading) {
+            // "Evade!" text pop-up.
+            Debug.Log("Evade!");
+
+            defender.isEvading = false;
+            return;
+        }
         
         // Apply or remove tokens.
 
@@ -93,7 +113,10 @@ public class UnitStateMachine : MonoBehaviour
 
         // Deal damage.
 
-        // Set status.
+        // Set status. Need to read this enum into the attackCommand before it will work.
+        if (myAttack.setStatus == AttackCommand.SetStatus.Evasion) {
+            defender.isEvading = true;
+        }
 
         // Anything else?
     }

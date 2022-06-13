@@ -19,5 +19,8 @@ MonoBehaviour:
   earthTokens: 0
   skyTokens: 0
   attackDamage: 0
-  stateCharge: 0
+  stateCharge: 20
   buttonSprite: {fileID: 21300000, guid: dfd1611697c976c46932c773a5d38a4b, type: 3}
+  targetMode: 1
+  damageMode: 2
+  setStatus: 1
