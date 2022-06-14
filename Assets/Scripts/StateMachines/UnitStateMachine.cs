@@ -23,7 +23,7 @@ public class UnitStateMachine : MonoBehaviour
     public bool animationComplete;
     public double initiative;
 
-    public bool isEvading;
+    public bool isEvading, isRegenerating, isBurning, isVulnerable;
 
     public List<Attack> attackList = new List<Attack>();
     public AttackCommand myAttack;
@@ -46,6 +46,7 @@ public class UnitStateMachine : MonoBehaviour
 
             case TurnState.Choosing:
 
+                StartTurn();
                 ChooseAction();
 
                 break;
@@ -71,9 +72,12 @@ public class UnitStateMachine : MonoBehaviour
     protected virtual void ChooseAction()
     {
         Attack attack = attackList[Random.Range(0, attackList.Count)];
+
         myAttack = ScriptableObject.CreateInstance<AttackCommand>();
         myAttack.attacker = gameObject;
         myAttack.target = battleManager.heroesInBattle[Random.Range(0, battleManager.heroesInBattle.Count)];
+        // How should enemies choose their attacks and targets?
+
         myAttack.attackName = attack.attackName;
         myAttack.description = attack.description;
         myAttack.fireTokens = attack.fireTokens;
@@ -89,6 +93,26 @@ public class UnitStateMachine : MonoBehaviour
         turnState = TurnState.Acting;
     }
 
+    private void EndTurn()
+    {
+        if (isBurning) {
+            float burnAmount = 20;
+            Debug.Log(gameObject.name + " burned for " + burnAmount);
+            currentHP = Mathf.Clamp(currentHP - burnAmount, 1, maxHP);
+        }
+    }
+
+    private void StartTurn()
+    {
+        if (isRegenerating) {
+            float regenAmount = 20;
+            Debug.Log(gameObject.name + " regenerated " + regenAmount);
+            currentHP = Mathf.Clamp(currentHP + regenAmount, 0, maxHP);
+        }
+    }
+
+
+
     private void DoDamage()
     {
         UnitStateMachine attacker = GetComponent<UnitStateMachine>();
@@ -97,7 +121,7 @@ public class UnitStateMachine : MonoBehaviour
         // Look for any special handling before the attack. Evade or Guard for example.
         if (defender.isEvading) {
             // "Evade!" text pop-up.
-            Debug.Log("Evade!");
+            Debug.Log(defender.name + " evaded " + attacker.name + "!");
 
             defender.isEvading = false;
             return;
@@ -109,13 +133,27 @@ public class UnitStateMachine : MonoBehaviour
 
         // Defender mitigates.
 
-        // Post-mitigation effects.
+        /*// Post-mitigation effects.
+        if (defender.isVulnerable) { 
+            damage *= 2; 
+            defender.isVulnerable = false; 
+        }*/
 
         // Deal damage.
 
         // Set status. Need to read this enum into the attackCommand before it will work.
-        if (myAttack.setStatus == AttackCommand.SetStatus.Evasion) {
+        if (myAttack.setStatus == Attack.SetStatus.Burning) {
+            defender.isBurning = true;
+        }
+        else if (myAttack.setStatus == Attack.SetStatus.Evasion) {
             defender.isEvading = true;
+        }
+        else if (myAttack.setStatus == Attack.SetStatus.Regen) {
+            defender.isRegenerating = true;
+        }
+        else if (myAttack.setStatus == Attack.SetStatus.Vulnerable) {
+            defender.isVulnerable = true;
+            Debug.Log(defender.name + " is vulnerable!");
         }
 
         // Anything else?
@@ -165,6 +203,8 @@ public class UnitStateMachine : MonoBehaviour
         initiative -= battleManager.turnThreshold;
 
         yield return MoveToTarget(startPosition);
+
+        EndTurn();
 
         attackStarted = false;
         turnState = TurnState.Idle;

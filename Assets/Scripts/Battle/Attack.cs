@@ -30,7 +30,10 @@ public class Attack : ScriptableObject
     public enum SetStatus
     {
         None,
+        Burning,
         Evasion,
+        Regen,
+        Vulnerable
     }
     public SetStatus setStatus;
 }
