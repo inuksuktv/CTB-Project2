@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.InputSystem;
 
 public class BattleGUIManager : MonoBehaviour
@@ -45,6 +46,7 @@ public class BattleGUIManager : MonoBehaviour
     private Transform turnQueueSpacer;
     [SerializeField] private GameObject inputPanel;
     [SerializeField] private GameObject turnQueuePanel;
+    [SerializeField] private GameObject damagePopup;
 
     List<Button> buttons = new List<Button>();
     public List<Portraits> portraits = new List<Portraits>();
@@ -223,12 +225,28 @@ public class BattleGUIManager : MonoBehaviour
             activePanel.SetActive(true);
 
             UpdateButtons();
+            // Change state.
             choosingAbility = true;
         }
 
         GeneratePortraits(turnQueue);
         AddPortraitsToGUI();
     }
+
+    public void TextPopup(string text, Vector3 position)
+    {
+        if (text != null) {
+            GameObject textPopup = Instantiate(damagePopup, canvas);
+
+            Vector2 screenPoint = Camera.main.WorldToScreenPoint(position);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(), screenPoint, null, out Vector2 canvasPoint);
+            textPopup.GetComponent<RectTransform>().localPosition = canvasPoint;
+
+            textPopup.GetComponent<TextMeshProUGUI>().text = text;
+        }
+    }
+
+
 
     private void AddPortraitsToGUI()
     {

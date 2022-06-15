@@ -180,12 +180,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnState: 0
   unitName: 
-  currentHP: 0
-  maxHP: 0
-  baseATK: 0
-  currentATK: 0
-  baseDEF: 0
-  currentDEF: 0
+  currentHP: 100
+  maxHP: 100
+  baseATK: 10
+  currentATK: 10
+  baseDEF: 5
+  currentDEF: 5
   speed: 19
   stateCharge: 0
   animationSpeed: 0
@@ -198,11 +198,16 @@ MonoBehaviour:
   attackStarted: 0
   animationComplete: 0
   initiative: 0
+  isEvading: 0
+  isRegenerating: 0
+  isBurning: 0
+  isVulnerable: 0
   attackList:
   - {fileID: 11400000, guid: e9e8b1a67e18034488754a276e82b83c, type: 2}
   - {fileID: 11400000, guid: c8e61c24dd8402e40832b1605c9ea764, type: 2}
   - {fileID: 11400000, guid: 6934041fc9b758647a73db019ae20127, type: 2}
   - {fileID: 11400000, guid: 0e9ce6317ab49cf41a42f007242c0ad7, type: 2}
+  myAttack: {fileID: 0}
   portrait: {fileID: 21300000, guid: 65dc82c8da2c71f44b45bd7ed7ecc446, type: 3}
 --- !u!1001 &8983787563820999675
 PrefabInstance:

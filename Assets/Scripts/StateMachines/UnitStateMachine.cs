@@ -97,17 +97,25 @@ public class UnitStateMachine : MonoBehaviour
     {
         if (isBurning) {
             float burnAmount = 20;
-            Debug.Log(gameObject.name + " burned for " + burnAmount);
             currentHP = Mathf.Clamp(currentHP - burnAmount, 1, maxHP);
+            string textPopup = burnAmount.ToString();
+            Vector3 popupPosition = transform.position;
+            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);
         }
+
+        attackStarted = false;
+        turnState = TurnState.Idle;
+        battleManager.battleState = BattleManager.BattleState.AdvanceTime;
     }
 
     private void StartTurn()
     {
         if (isRegenerating) {
             float regenAmount = 20;
-            Debug.Log(gameObject.name + " regenerated " + regenAmount);
             currentHP = Mathf.Clamp(currentHP + regenAmount, 0, maxHP);
+            string textPopup = regenAmount.ToString();
+            Vector3 popupPosition = transform.position;
+            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);
         }
     }
 
@@ -120,43 +128,71 @@ public class UnitStateMachine : MonoBehaviour
 
         // Look for any special handling before the attack. Evade or Guard for example.
         if (defender.isEvading) {
-            // "Evade!" text pop-up.
-            Debug.Log(defender.name + " evaded " + attacker.name + "!");
+            string textPopup = "Evade!";
+            Vector3 popupPosition = defender.transform.position;
+            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);
 
             defender.isEvading = false;
             return;
         }
-        
+
         // Apply or remove tokens.
 
         // Calculate raw attack damage. 
+        float calcDamage = myAttack.damage + currentATK;
 
-        // Defender mitigates.
+        // Defender mitigates. Absorption and shields go here.
+        calcDamage -= defender.currentDEF;
 
-        /*// Post-mitigation effects.
+        // Post-mitigation effects.
         if (defender.isVulnerable) { 
-            damage *= 2; 
+            calcDamage *= 2; 
             defender.isVulnerable = false; 
-        }*/
+        }
 
-        // Deal damage.
+        // Send damage.
+        defender.TakeDamage(Mathf.Floor(calcDamage));
 
-        // Set status. Need to read this enum into the attackCommand before it will work.
+        // Set status.
         if (myAttack.setStatus == Attack.SetStatus.Burning) {
             defender.isBurning = true;
+            string textPopup = "Burning!";
+            Vector3 popupPosition = defender.transform.position;
+            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);
+            // Play particleEffect for Burn.
         }
         else if (myAttack.setStatus == Attack.SetStatus.Evasion) {
             defender.isEvading = true;
+            // Play particleEffect(?) for Evade.
         }
         else if (myAttack.setStatus == Attack.SetStatus.Regen) {
             defender.isRegenerating = true;
+            string textPopup = "Regen";
+            Vector3 popupPosition = defender.transform.position;
+            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);
+            // Play particleEffect for Regen.
         }
         else if (myAttack.setStatus == Attack.SetStatus.Vulnerable) {
             defender.isVulnerable = true;
-            Debug.Log(defender.name + " is vulnerable!");
+            string textPopup = "Vulnerable!";
+            Vector3 popupPosition = defender.transform.position;
+            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);
+            // Play particleEffect(?) for Vulnerable.
         }
 
         // Anything else?
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHP = Mathf.Clamp(currentHP - damage, 0, maxHP);
+        if (currentHP == 0) {
+            turnState = TurnState.Dead;
+        }
+
+        string damagePopup = damage.ToString();
+        Vector3 popupPosition = transform.position;
+        battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(damagePopup, popupPosition);
     }
 
     private IEnumerator MoveToTarget(Vector2 target)
@@ -205,10 +241,6 @@ public class UnitStateMachine : MonoBehaviour
         yield return MoveToTarget(startPosition);
 
         EndTurn();
-
-        attackStarted = false;
-        turnState = TurnState.Idle;
-        battleManager.battleState = BattleManager.BattleState.AdvanceTime;
     }
 
     private void AnimationFinished()
