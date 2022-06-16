@@ -51,6 +51,7 @@ public class BattleGUIManager : MonoBehaviour
     List<Button> buttons = new List<Button>();
     public List<Portraits> portraits = new List<Portraits>();
     private List<GameObject> inputPanels = new List<GameObject>();
+    private List<GameObject> GUIObjects = new List<GameObject>();
     #endregion
 
     #region "Awake, OnEnable, and OnDisable"
@@ -103,6 +104,10 @@ public class BattleGUIManager : MonoBehaviour
         rightInput.Disable();
         downInput.Disable();
 
+        foreach (GameObject element in GUIObjects) {
+            Destroy(element);
+        }
+
         if (playerInput != null) { playerInput.actions.FindActionMap("Battle").Disable(); }
     }
     #endregion
@@ -112,7 +117,6 @@ public class BattleGUIManager : MonoBehaviour
 
     private void Confirm(InputAction.CallbackContext context)
     {
-        Debug.Log("Confirm");
         if (waitingForConfirmation) {
             choosingTarget = true;
             choosingAbility = false;
@@ -135,7 +139,6 @@ public class BattleGUIManager : MonoBehaviour
 
     private void Cancel(InputAction.CallbackContext context)
     {
-        Debug.Log("Cancel");
         if (waitingForConfirmation) {
             waitingForConfirmation = false;
             // Refresh input panel.
@@ -156,7 +159,6 @@ public class BattleGUIManager : MonoBehaviour
 
     private void Up(InputAction.CallbackContext context)
     {
-        Debug.Log("Up");
         if (choosingAbility) {
             RectTransform buttonRT = buttons[0].GetComponent<RectTransform>();
             Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[0];
@@ -169,7 +171,6 @@ public class BattleGUIManager : MonoBehaviour
 
     private void Left(InputAction.CallbackContext context)
     {
-        Debug.Log("Left");
         if (choosingAbility) {
             RectTransform buttonRT = buttons[1].GetComponent<RectTransform>();
             Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[1];
@@ -182,7 +183,6 @@ public class BattleGUIManager : MonoBehaviour
 
     private void Right(InputAction.CallbackContext context)
     {
-        Debug.Log("Right");
         if (choosingAbility) {
             RectTransform buttonRT = buttons[2].GetComponent<RectTransform>();
             Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[2];
@@ -195,7 +195,6 @@ public class BattleGUIManager : MonoBehaviour
 
     private void Down(InputAction.CallbackContext context)
     {
-        Debug.Log("Down");
         if (choosingAbility) {
             RectTransform buttonRT = buttons[3].GetComponent<RectTransform>();
             Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[3];
@@ -212,6 +211,7 @@ public class BattleGUIManager : MonoBehaviour
         battleManager = gameObject.GetComponent<BattleManager>();
         canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
         turnQueueSpacer = canvas.Find("TurnQueueSpacer");
+        GUIObjects.Add(turnQueueSpacer.gameObject);
 
         CreateInputPanels();
     }
@@ -225,12 +225,14 @@ public class BattleGUIManager : MonoBehaviour
             activePanel.SetActive(true);
 
             UpdateButtons();
+
             // Change state.
             choosingAbility = true;
+            choosingTarget = false;
         }
 
         GeneratePortraits(turnQueue);
-        AddPortraitsToGUI();
+        SendPortraitsToGUI();
     }
 
     public void TextPopup(string text, Vector3 position)
@@ -243,42 +245,6 @@ public class BattleGUIManager : MonoBehaviour
             textPopup.GetComponent<RectTransform>().localPosition = canvasPoint;
 
             textPopup.GetComponent<TextMeshProUGUI>().text = text;
-        }
-    }
-
-
-
-    private void AddPortraitsToGUI()
-    {
-        foreach (Transform child in turnQueueSpacer) {
-            Destroy(child.gameObject);
-        }
-
-        int index = 0;
-        foreach (Portraits portrait in portraits) {
-            Transform newPanel = Instantiate(turnQueuePanel, turnQueueSpacer).transform;
-
-            Transform icon = newPanel.Find("UnitPortrait");
-            Image newPortrait = icon.GetComponent<Image>();
-            RectTransform newPortraitRT = icon.GetComponent<RectTransform>();
-
-            newPortrait.sprite = portrait.sprite;
-
-            if (index > 0) {
-                newPortraitRT.anchoredPosition += 30 * Vector2.right;
-            }
-
-            double calcProgress = portrait.unit.GetComponent<UnitStateMachine>().initiative / battleManager.turnThreshold;
-
-            if (portrait.duplicate) {
-                calcProgress = 0;
-                newPortraitRT.anchoredPosition += 30 * Vector2.right;
-            }
-
-            GameObject progressBar = newPanel.GetComponentInChildren<Mask>().gameObject;
-            progressBar.transform.localScale = new Vector3(Mathf.Clamp((float)calcProgress, 0, 1), progressBar.transform.localScale.y, progressBar.transform.localScale.z);
-
-            index++;
         }
     }
 
@@ -380,6 +346,7 @@ public class BattleGUIManager : MonoBehaviour
 
             newPanel.SetActive(false);
             inputPanels.Add(newPanel);
+            GUIObjects.Add(newPanel);
 
             Vector3 offset = 0.7f * Vector3.up;
             Vector2 screenPoint = Camera.main.WorldToScreenPoint(hero.transform.position + offset);
@@ -388,7 +355,6 @@ public class BattleGUIManager : MonoBehaviour
         }
     }
 
-    // Prepare the portraits based on the turnQueue.
     private void GeneratePortraits(List<GameObject> turnQueue)
     {
         portraits.Clear();
@@ -406,6 +372,40 @@ public class BattleGUIManager : MonoBehaviour
                 }
             }
             portraits.Add(newPanel);
+        }
+    }
+
+    private void SendPortraitsToGUI()
+    {
+        foreach (Transform child in turnQueueSpacer) {
+            Destroy(child.gameObject);
+        }
+
+        int index = 0;
+        foreach (Portraits portrait in portraits) {
+            Transform newPanel = Instantiate(turnQueuePanel, turnQueueSpacer).transform;
+
+            Transform icon = newPanel.Find("UnitPortrait");
+            Image newPortrait = icon.GetComponent<Image>();
+            RectTransform newPortraitRT = icon.GetComponent<RectTransform>();
+
+            newPortrait.sprite = portrait.sprite;
+
+            if (index > 0) {
+                newPortraitRT.anchoredPosition += 30 * Vector2.right;
+            }
+
+            double calcProgress = portrait.unit.GetComponent<UnitStateMachine>().initiative / battleManager.turnThreshold;
+
+            if (portrait.duplicate) {
+                calcProgress = 0;
+                newPortraitRT.anchoredPosition += 30 * Vector2.right;
+            }
+
+            GameObject progressBar = newPanel.GetComponentInChildren<Mask>().gameObject;
+            progressBar.transform.localScale = new Vector3(Mathf.Clamp((float)calcProgress, 0, 1), progressBar.transform.localScale.y, progressBar.transform.localScale.z);
+
+            index++;
         }
     }
 

@@ -19,8 +19,8 @@ public class UnitStateMachine : MonoBehaviour
     public string unitName;
     public float currentHP, maxHP, baseATK, currentATK, baseDEF, currentDEF, speed, stateCharge, animationSpeed;
     public int fireTokens, waterTokens, earthTokens, skyTokens;
-    public bool dualState, alive, attackStarted;
-    public bool animationComplete;
+    public bool dualState, attackStarted, animationComplete;
+    protected bool alive = true;
     public double initiative;
 
     public bool isEvading, isRegenerating, isBurning, isVulnerable;
@@ -59,6 +59,8 @@ public class UnitStateMachine : MonoBehaviour
 
             case TurnState.Dead:
 
+                DieAndCleanup();
+
                 break;
         }
     }
@@ -67,6 +69,18 @@ public class UnitStateMachine : MonoBehaviour
     {
         myAttack = attack;
         turnState = TurnState.Acting;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHP = Mathf.Clamp(currentHP - damage, 0, maxHP);
+        if (currentHP == 0) {
+            turnState = TurnState.Dead;
+        }
+
+        string damagePopup = damage.ToString();
+        Vector3 popupPosition = transform.position;
+        battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(damagePopup, popupPosition);
     }
 
     protected virtual void ChooseAction()
@@ -91,6 +105,83 @@ public class UnitStateMachine : MonoBehaviour
         myAttack.setStatus = attack.setStatus;
 
         turnState = TurnState.Acting;
+    }
+
+    protected virtual void DieAndCleanup()
+    {
+        if (!alive) { return; }
+        else {
+            tag = "DeadEnemy";
+
+            battleManager.enemiesInBattle.Remove(gameObject);
+            battleManager.combatants.Remove(gameObject);
+
+            GetComponent<SpriteRenderer>().color = Color.black;
+            
+            // Turn off particle effects here as well.
+
+            alive = false;
+
+            battleManager.battleState = BattleManager.BattleState.VictoryCheck;
+        }
+    }
+
+    private void DoDamage()
+    {
+        UnitStateMachine attacker = GetComponent<UnitStateMachine>();
+        UnitStateMachine defender = myAttack.target.GetComponent<UnitStateMachine>();
+
+        // Look for any special handling before the attack. Evade or Guard for example.
+        if (defender.isEvading) {
+            string textPopup = "Evade!";
+            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, defender.transform.position);
+
+            defender.isEvading = false;
+            return;
+        }
+
+        // Apply or remove tokens.
+
+        // Calculate raw attack damage. 
+        float calcDamage = myAttack.damage + currentATK;
+
+        // Defender mitigates. Absorption and shields go here.
+        calcDamage -= defender.currentDEF;
+
+        // Post-mitigation effects.
+        if (defender.isVulnerable) {
+            calcDamage *= 2;
+            defender.isVulnerable = false;
+        }
+
+        // Send damage.
+        defender.TakeDamage(Mathf.Floor(calcDamage));
+
+        // Set status.
+        if (myAttack.setStatus == Attack.SetStatus.Burning) {
+            defender.isBurning = true;
+            string textPopup = "Burning!";
+            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, defender.transform.position);
+            // Play particleEffect for Burn.
+        }
+        else if (myAttack.setStatus == Attack.SetStatus.Evasion) {
+            defender.isEvading = true;
+            // Play particleEffect(?) for Evade.
+        }
+        else if (myAttack.setStatus == Attack.SetStatus.Regen) {
+            defender.isRegenerating = true;
+            string textPopup = "Regen";
+            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, defender.transform.position);
+            // Play particleEffect for Regen.
+        }
+        else if (myAttack.setStatus == Attack.SetStatus.Vulnerable) {
+            defender.isVulnerable = true;
+            string textPopup = "Vulnerable!";
+            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, defender.transform.position);
+            // Play particleEffect(?) for Vulnerable.
+        }
+
+        // Anything else?
     }
 
     private void EndTurn()
@@ -121,79 +212,7 @@ public class UnitStateMachine : MonoBehaviour
 
 
 
-    private void DoDamage()
-    {
-        UnitStateMachine attacker = GetComponent<UnitStateMachine>();
-        UnitStateMachine defender = myAttack.target.GetComponent<UnitStateMachine>();
-
-        // Look for any special handling before the attack. Evade or Guard for example.
-        if (defender.isEvading) {
-            string textPopup = "Evade!";
-            Vector3 popupPosition = defender.transform.position;
-            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);
-
-            defender.isEvading = false;
-            return;
-        }
-
-        // Apply or remove tokens.
-
-        // Calculate raw attack damage. 
-        float calcDamage = myAttack.damage + currentATK;
-
-        // Defender mitigates. Absorption and shields go here.
-        calcDamage -= defender.currentDEF;
-
-        // Post-mitigation effects.
-        if (defender.isVulnerable) { 
-            calcDamage *= 2; 
-            defender.isVulnerable = false; 
-        }
-
-        // Send damage.
-        defender.TakeDamage(Mathf.Floor(calcDamage));
-
-        // Set status.
-        if (myAttack.setStatus == Attack.SetStatus.Burning) {
-            defender.isBurning = true;
-            string textPopup = "Burning!";
-            Vector3 popupPosition = defender.transform.position;
-            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);
-            // Play particleEffect for Burn.
-        }
-        else if (myAttack.setStatus == Attack.SetStatus.Evasion) {
-            defender.isEvading = true;
-            // Play particleEffect(?) for Evade.
-        }
-        else if (myAttack.setStatus == Attack.SetStatus.Regen) {
-            defender.isRegenerating = true;
-            string textPopup = "Regen";
-            Vector3 popupPosition = defender.transform.position;
-            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);
-            // Play particleEffect for Regen.
-        }
-        else if (myAttack.setStatus == Attack.SetStatus.Vulnerable) {
-            defender.isVulnerable = true;
-            string textPopup = "Vulnerable!";
-            Vector3 popupPosition = defender.transform.position;
-            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);
-            // Play particleEffect(?) for Vulnerable.
-        }
-
-        // Anything else?
-    }
-
-    public void TakeDamage(float damage)
-    {
-        currentHP = Mathf.Clamp(currentHP - damage, 0, maxHP);
-        if (currentHP == 0) {
-            turnState = TurnState.Dead;
-        }
-
-        string damagePopup = damage.ToString();
-        Vector3 popupPosition = transform.position;
-        battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(damagePopup, popupPosition);
-    }
+    
 
     private IEnumerator MoveToTarget(Vector2 target)
     {

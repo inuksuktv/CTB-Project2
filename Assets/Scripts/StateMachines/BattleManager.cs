@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BattleManager : MonoBehaviour
 {
@@ -85,13 +86,50 @@ public class BattleManager : MonoBehaviour
 
             case BattleState.VictoryCheck:
 
+                if (heroesInBattle.Count < 1) {
+                    battleState = BattleState.Lose;
+                }
+                else if (enemiesInBattle.Count < 1) {
+                    battleState = BattleState.Win;
+                }
+                else {
+                    // Also refresh the GUI. 
+                    battleState = BattleState.Idle;
+                }
+
                 break;
 
             case BattleState.Win:
 
+                Debug.Log("You won the battle.");
+
+                // Stop the active turn.
+                foreach (GameObject hero in heroesInBattle) {
+                    UnitStateMachine script = hero.GetComponent<UnitStateMachine>();
+                    if (script.turnState == UnitStateMachine.TurnState.Acting) {
+                        script.StopAllCoroutines();
+                    }
+                    script.turnState = UnitStateMachine.TurnState.Idle;
+                }
+
+                // Refresh heroes after battle.
+                foreach (GameObject hero in GameManager.Instance.heroes) {
+                    hero.tag = "Hero";
+                    hero.GetComponent<BoxCollider2D>().enabled = true;
+                    UnitStateMachine script = hero.GetComponent<UnitStateMachine>();
+                    script.currentHP = script.maxHP;
+                }
+
+                // Return control to the player and destroy the battle.
+                GameManager.Instance.GetComponent<PlayerInput>().actions.FindActionMap("Field").Enable();
+                GameManager.Instance.heroes[0].GetComponent<PlayerController>().enabled = true;
+                Destroy(gameObject);
+
                 break;
 
             case BattleState.Lose:
+
+                Debug.Log("You lost the battle.");
 
                 break;
         }
@@ -112,7 +150,7 @@ public class BattleManager : MonoBehaviour
 
         unit.gameObject.GetComponent<PlayerController>().enabled = false;
 
-        // I'm turning off rigidbodies as well so things don't bump into eachother.
+        // I'm turning off boxColliders in combat so things don't bump into eachother.
         LoadCombatants();
         yield return StartCoroutine(MoveUnitsToMarkers());
 
@@ -151,9 +189,8 @@ public class BattleManager : MonoBehaviour
             index++;
         }
 
-        // Also disable rigidbodies?
         foreach (GameObject unit in combatants) {
-            Destroy(unit.GetComponent<Rigidbody2D>());
+            unit.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 
