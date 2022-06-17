@@ -132,7 +132,6 @@ public class UnitStateMachine : MonoBehaviour
 
     private void DoDamage()
     {
-        UnitStateMachine attacker = GetComponent<UnitStateMachine>();
         UnitStateMachine defender = myAttack.target.GetComponent<UnitStateMachine>();
 
         // Look for any special handling before the attack. Evade or Guard.
@@ -156,6 +155,10 @@ public class UnitStateMachine : MonoBehaviour
         if (defender.isVulnerable) {
             calcDamage *= 2;
             defender.isVulnerable = false;
+        }
+        if (myAttack.damageMode == Attack.DamageMode.Flash) {
+            float healthRatio = currentHP / maxHP;
+            calcDamage *= (2 - healthRatio);
         }
 
         // Send damage.

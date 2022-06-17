@@ -24,7 +24,8 @@ public class Attack : ScriptableObject
         Damage,
         Heal,
         Other,
-        Delayed
+        Delayed,
+        Flash
     }
     public DamageMode damageMode;
 

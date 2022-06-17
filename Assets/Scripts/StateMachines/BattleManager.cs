@@ -106,9 +106,7 @@ public class BattleManager : MonoBehaviour
                 // Stop the active turn.
                 foreach (GameObject hero in heroesInBattle) {
                     UnitStateMachine script = hero.GetComponent<UnitStateMachine>();
-                    if (script.turnState == UnitStateMachine.TurnState.Acting) {
-                        script.StopAllCoroutines();
-                    }
+                    script.StopAllCoroutines();
                     script.turnState = UnitStateMachine.TurnState.Idle;
                 }
 
@@ -138,7 +136,6 @@ public class BattleManager : MonoBehaviour
     {
         StartCoroutine(StartCombat(collider.gameObject));
     }
-
 
     public IEnumerator StartCombat(GameObject unit)
     {
@@ -245,16 +242,15 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // Sort units by ticks needed.
+    // Sort units by ticksToNextTurn.
     private void CalculateTicksToNextTurn()
     {
-        // Calculate how many ticks each unit needs to fill its initiative.
         foreach (CachedInitiative unit in unitInitiatives) {
             double initiativeDifference = turnThreshold - unit.initiative;
             unit.ticksToNextTurn = initiativeDifference / unit.speed;
         }
 
-        // Sort the array by ticks. Least ticks first.
+        // Least ticks at [0].
         Array.Sort(unitInitiatives, delegate (CachedInitiative a, CachedInitiative b) {
             return a.ticksToNextTurn.CompareTo(b.ticksToNextTurn);
         });
@@ -274,7 +270,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // This method copies unitInitiatives to simulate turns and assumes the list is already sorted with the first entry at 100 initiative.
+    // This method copies unitInitiatives to simulate turns and assumes the list is already sorted with the first unit ready at 100 initiative.
     private void GenerateTurnQueue()
     {
         cacheCopy = new CachedInitiative[unitInitiatives.Length];
