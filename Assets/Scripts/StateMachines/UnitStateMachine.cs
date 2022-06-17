@@ -19,7 +19,7 @@ public class UnitStateMachine : MonoBehaviour
     public string unitName;
     public float currentHP, maxHP, baseATK, currentATK, baseDEF, currentDEF, speed, stateCharge, animationSpeed;
     public int fireTokens, waterTokens, earthTokens, skyTokens;
-    public bool dualState, attackStarted, animationComplete;
+    public bool dualState, attackStarted, delayedAttack, animationComplete;
     protected bool alive = true;
     public double initiative;
 
@@ -90,9 +90,13 @@ public class UnitStateMachine : MonoBehaviour
         myAttack = ScriptableObject.CreateInstance<AttackCommand>();
         myAttack.attacker = gameObject;
         myAttack.target = battleManager.heroesInBattle[Random.Range(0, battleManager.heroesInBattle.Count)];
-        // How should enemies choose their attacks and targets?
+        // Catching for Phased units.
+        if (myAttack.target.GetComponent<UnitStateMachine>().delayedAttack) {
+            List<GameObject> targets = battleManager.heroesInBattle;
+            targets.Remove(myAttack.target);
+            myAttack.target = targets[Random.Range(0, targets.Count)];
+        }
 
-        myAttack.attackName = attack.attackName;
         myAttack.description = attack.description;
         myAttack.fireTokens = attack.fireTokens;
         myAttack.waterTokens = attack.waterTokens;
@@ -131,7 +135,7 @@ public class UnitStateMachine : MonoBehaviour
         UnitStateMachine attacker = GetComponent<UnitStateMachine>();
         UnitStateMachine defender = myAttack.target.GetComponent<UnitStateMachine>();
 
-        // Look for any special handling before the attack. Evade or Guard for example.
+        // Look for any special handling before the attack. Evade or Guard.
         if (defender.isEvading) {
             string textPopup = "Evade!";
             battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, defender.transform.position);
@@ -201,6 +205,7 @@ public class UnitStateMachine : MonoBehaviour
 
     private void StartTurn()
     {
+        if (delayedAttack) { return; }
         if (isRegenerating) {
             float regenAmount = 20;
             currentHP = Mathf.Clamp(currentHP + regenAmount, 0, maxHP);
@@ -210,9 +215,52 @@ public class UnitStateMachine : MonoBehaviour
         }
     }
 
+    private IEnumerator DelayedAttack()
+    {
+        Vector2 startPosition = transform.position;
 
+        // Play an animation and vanish.
+        if (animator != null) {
+            animator.SetTrigger("Fold");
+        }
+        animationComplete = false;
+        if (animator != null) {
+            while (!animationComplete) { yield return null; }
+        }
+        GetComponent<SpriteRenderer>().enabled = false;
 
-    
+        // Set initiative and delayed flag.
+        delayedAttack = true;
+        initiative -= battleManager.turnThreshold / 2;
+
+        // Tell the battle manager to send the next turn.
+        battleManager.battleState = BattleManager.BattleState.AdvanceTime;
+        turnState = TurnState.Idle;
+
+        // Wait until this unit's turn comes up again.
+        yield return new WaitWhile(() => delayedAttack);
+        turnState = TurnState.Acting;
+
+        // Pick a new target if the old target is dead.
+
+        // Appear at a new location.
+        transform.position = myAttack.target.transform.position + Vector3.up;
+        GetComponent<SpriteRenderer>().enabled = true;
+        if (animator != null) {
+            animator.SetTrigger("Fold");
+        }
+        animationComplete = false;
+        if (animator != null) {
+            while (!animationComplete) { yield return null; }
+        }
+
+        // Complete the attack.
+        DoDamage();
+        initiative -= battleManager.turnThreshold;
+        yield return MoveToTarget(startPosition);
+
+        EndTurn();
+    }
 
     private IEnumerator MoveToTarget(Vector2 target)
     {
@@ -236,6 +284,11 @@ public class UnitStateMachine : MonoBehaviour
             yield break;
         }
         attackStarted = true;
+
+        if (myAttack.damageMode == Attack.DamageMode.Delayed) {
+            StartCoroutine(DelayedAttack());
+            yield break;
+        }
 
         Vector2 startPosition = transform.position;
 

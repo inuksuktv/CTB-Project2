@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TextAnimation : MonoBehaviour
+public class DamageTextAnimation : MonoBehaviour
 {
     private float animationSpeed = 50f;
     private RectTransform myRT;

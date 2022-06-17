@@ -163,7 +163,7 @@ public class BattleManager : MonoBehaviour
 
 
 
-    private void LoadCombatants()
+    public void LoadCombatants()
     {
         // Load heroes.
         foreach (GameObject hero in GameManager.Instance.heroes) {
@@ -189,6 +189,7 @@ public class BattleManager : MonoBehaviour
             index++;
         }
 
+        // Turn off colliders in combat.
         foreach (GameObject unit in combatants) {
             unit.GetComponent<BoxCollider2D>().enabled = false;
         }
@@ -211,7 +212,7 @@ public class BattleManager : MonoBehaviour
     }
 
     // Move a unit until it arrives at its target.
-    public IEnumerator MoveToTarget(GameObject unit, Vector2 target)
+    private IEnumerator MoveToTarget(GameObject unit, Vector2 target)
     {
         yield return new WaitUntil(() => MoveTick(unit, target));
     }

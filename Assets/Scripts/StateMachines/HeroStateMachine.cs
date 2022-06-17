@@ -6,7 +6,15 @@ public class HeroStateMachine : UnitStateMachine
 {
     protected override void ChooseAction()
     {
-        myAttack = ScriptableObject.CreateInstance<AttackCommand>();
+        if (delayedAttack) {
+            // Catching delayed attacks. The attack coroutine takes over again with the unit at 100 initiative.
+            delayedAttack = false;
+            battleManager.gameObject.GetComponent<BattleGUIManager>().ClearInputPanels();
+        }
+        else {
+            // The BattleGUIManager takes over the hero's turn from here.
+            myAttack = ScriptableObject.CreateInstance<AttackCommand>();
+        }
         turnState = TurnState.Idle;
     }
 

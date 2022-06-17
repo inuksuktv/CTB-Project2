@@ -38,7 +38,6 @@ public class BattleGUIManager : MonoBehaviour
     private GameObject activeUnit;
     private GameObject targetedUnit;
     private int targetIndex;
-    private List<GameObject> targetedTeam;
     public AttackCommand heroChoice;
 
     // GUI objects.
@@ -54,7 +53,7 @@ public class BattleGUIManager : MonoBehaviour
     private List<GameObject> GUIObjects = new List<GameObject>();
     #endregion
 
-    #region "Awake, OnEnable, and OnDisable"
+    #region Awake, OnEnable, and OnDisable
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager");
@@ -113,7 +112,7 @@ public class BattleGUIManager : MonoBehaviour
     #endregion
 
     // All these inputs should be refactored using a state machine. Setting flags to change state is garbage.
-    #region "InputFunctions"
+    #region InputFunctions
 
     private void Confirm(InputAction.CallbackContext context)
     {
@@ -129,7 +128,7 @@ public class BattleGUIManager : MonoBehaviour
         else if (choosingTarget) {
             choosingTarget = false;
             // Target confirmed. Unit can collect the attack and act.
-            TargetInput(targetedUnit);
+            InputTarget(targetedUnit);
             activeUnit.GetComponent<UnitStateMachine>().CollectAction(heroChoice);
             ClearInputPanels();
             targetedUnit.transform.Find("Selector").gameObject.SetActive(false);
@@ -162,7 +161,7 @@ public class BattleGUIManager : MonoBehaviour
         if (choosingAbility) {
             RectTransform buttonRT = buttons[0].GetComponent<RectTransform>();
             Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[0];
-            AttackInput(buttonRT, attack);
+            InputAttack(buttonRT, attack);
         }
         else if (choosingTarget) {
             TargetNextTeam(targetedUnit);
@@ -174,7 +173,7 @@ public class BattleGUIManager : MonoBehaviour
         if (choosingAbility) {
             RectTransform buttonRT = buttons[1].GetComponent<RectTransform>();
             Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[1];
-            AttackInput(buttonRT, attack);
+            InputAttack(buttonRT, attack);
         }
         else if (choosingTarget) {
             TargetPreviousItem(targetedUnit);
@@ -186,7 +185,7 @@ public class BattleGUIManager : MonoBehaviour
         if (choosingAbility) {
             RectTransform buttonRT = buttons[2].GetComponent<RectTransform>();
             Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[2];
-            AttackInput(buttonRT, attack);
+            InputAttack(buttonRT, attack);
         }
         else if (choosingTarget) {
             TargetNextItem(targetedUnit);
@@ -198,7 +197,7 @@ public class BattleGUIManager : MonoBehaviour
         if (choosingAbility) {
             RectTransform buttonRT = buttons[3].GetComponent<RectTransform>();
             Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[3];
-            AttackInput(buttonRT, attack);
+            InputAttack(buttonRT, attack);
         }
         else if (choosingTarget) {
             TargetNextTeam(targetedUnit);
@@ -214,6 +213,27 @@ public class BattleGUIManager : MonoBehaviour
         GUIObjects.Add(turnQueueSpacer.gameObject);
 
         CreateInputPanels();
+    }
+
+    public void ClearInputPanels()
+    {
+        // Set all the buttons opaque.
+        if (activePanel != null) {
+            foreach (RectTransform child in activePanel.transform) {
+                Image buttonImage = child.GetComponent<Image>();
+                Text buttonText = child.GetComponentInChildren<Text>();
+                Image arrowImage = child.Find("Arrow").GetComponent<Image>();
+
+                buttonImage.color = new Color(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 1f);
+                buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, 1f);
+                arrowImage.color = new Color(arrowImage.color.r, arrowImage.color.g, arrowImage.color.b, 1f);
+            }
+        }
+
+        foreach (GameObject panel in inputPanels) {
+            panel.SetActive(false);
+        }
+        //infoBox.SetActive(false);
     }
 
     public void ReceiveTurnQueue(List<GameObject> turnQueue)
@@ -245,14 +265,14 @@ public class BattleGUIManager : MonoBehaviour
             textPopup.GetComponent<RectTransform>().localPosition = canvasPoint;
 
             textPopup.GetComponent<TextMeshProUGUI>().text = text;
+            textPopup.AddComponent<DamageTextAnimation>();
         }
     }
 
-    private void AttackInput(Transform button, Attack attack)
+    private void InputAttack(Transform button, Attack attack)
     {
         heroChoice = ScriptableObject.CreateInstance<AttackCommand>();
         heroChoice.attacker = activeUnit;
-        heroChoice.attackName = attack.attackName;
         heroChoice.description = attack.description;
         heroChoice.fireTokens = attack.fireTokens;
         heroChoice.waterTokens = attack.waterTokens;
@@ -291,26 +311,12 @@ public class BattleGUIManager : MonoBehaviour
         waitingForConfirmation = true;
     }
 
-    private void ClearInputPanels()
+    private void InputTarget(GameObject unit)
     {
-        // Set all the buttons opaque.
-        if (activePanel != null) {
-            foreach (RectTransform child in activePanel.transform) {
-                Image buttonImage = child.GetComponent<Image>();
-                Text buttonText = child.GetComponentInChildren<Text>();
-                Image arrowImage = child.Find("Arrow").GetComponent<Image>();
-
-                buttonImage.color = new Color(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 1f);
-                buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, 1f);
-                arrowImage.color = new Color(arrowImage.color.r, arrowImage.color.g, arrowImage.color.b, 1f);
-            }
-        }
-
-        foreach (GameObject panel in inputPanels) {
-            panel.SetActive(false);
-        }
-        //infoBox.SetActive(false);
+        heroChoice.target = unit;
     }
+
+    
 
     private void CreateInputPanels()
     {
@@ -409,11 +415,6 @@ public class BattleGUIManager : MonoBehaviour
         }
     }
 
-    private void TargetInput(GameObject unit)
-    {
-        heroChoice.target = unit;
-    }
-
     private void TargetNextItem(GameObject currentTarget) 
     {
         if (currentTarget.tag == "Hero") {
@@ -476,7 +477,7 @@ public class BattleGUIManager : MonoBehaviour
             Image buttonImage = button.GetComponent<Image>();
 
             Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[index];
-            buttonText.text = attack.attackName;
+            buttonText.text = attack.name;
             buttonImage.sprite = attack.buttonSprite;
             index++;
         }
