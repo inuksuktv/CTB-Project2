@@ -25,7 +25,8 @@ public class Attack : ScriptableObject
         Heal,
         Other,
         Delayed,
-        Flash
+        Flash,
+        Burn
     }
     public DamageMode damageMode;
 
@@ -35,7 +36,8 @@ public class Attack : ScriptableObject
         Burning,
         Evasion,
         Regen,
-        Vulnerable
+        Vulnerable,
+        Reset
     }
     public SetStatus setStatus;
 }

@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class BattleGUIManager : MonoBehaviour
 {
-    #region "Variables"
+    #region Variables
     public enum HeroGUI
     {
         Idle,
@@ -315,8 +315,6 @@ public class BattleGUIManager : MonoBehaviour
     {
         heroChoice.target = unit;
     }
-
-    
 
     private void CreateInputPanels()
     {

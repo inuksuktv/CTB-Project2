@@ -121,7 +121,7 @@ public class UnitStateMachine : MonoBehaviour
             battleManager.combatants.Remove(gameObject);
 
             GetComponent<SpriteRenderer>().color = Color.black;
-            
+
             // Turn off particle effects here as well.
 
             alive = false;
@@ -148,10 +148,10 @@ public class UnitStateMachine : MonoBehaviour
         // Calculate raw attack damage. 
         float calcDamage = myAttack.damage + currentATK;
 
-        // Defender mitigates. Absorption and shields go here.
+        // Defender mitigates. Shields subtract from damage along with DEF here.
         calcDamage -= defender.currentDEF;
 
-        // Post-mitigation effects.
+        // Post-mitigation effects. Absorption applies here.
         if (defender.isVulnerable) {
             calcDamage *= 2;
             defender.isVulnerable = false;
@@ -163,6 +163,9 @@ public class UnitStateMachine : MonoBehaviour
 
         // Send damage.
         defender.TakeDamage(Mathf.Floor(calcDamage));
+        if (myAttack.damageMode == Attack.DamageMode.Burn) {
+            TakeDamage(Mathf.Floor(calcDamage / 2));
+        }
 
         // Set status.
         if (myAttack.setStatus == Attack.SetStatus.Burning) {
@@ -186,6 +189,12 @@ public class UnitStateMachine : MonoBehaviour
             string textPopup = "Vulnerable!";
             battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, defender.transform.position);
             // Play particleEffect(?) for Vulnerable.
+        }
+        else if (myAttack.setStatus == Attack.SetStatus.Reset) {
+            defender.isEvading = false;
+            defender.isRegenerating = false;
+            defender.isBurning = false;
+            defender.isVulnerable = false;
         }
 
         // Anything else?
