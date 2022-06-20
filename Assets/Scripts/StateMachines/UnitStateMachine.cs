@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnitStateMachine : MonoBehaviour
 {
     protected BattleManager battleManager;
-    protected Animator animator;
+    public Animator animator;
 
     public enum TurnState
     {
@@ -23,11 +23,12 @@ public class UnitStateMachine : MonoBehaviour
     protected bool alive = true;
     public double initiative;
 
-    public bool isEvading, isRegenerating, isBurning, isVulnerable;
+    public bool isGuarded, isEvading, isRegenerating, isBurning, isVulnerable;
 
     public List<Attack> attackList = new List<Attack>();
     public AttackCommand myAttack;
     public Sprite portrait;
+    public GameObject guard;
 
     private void Start()
     {
@@ -39,7 +40,8 @@ public class UnitStateMachine : MonoBehaviour
 
     private void Update()
     {
-        switch (turnState) {
+        switch (turnState)
+        {
             case TurnState.Idle:
 
                 break;
@@ -90,7 +92,7 @@ public class UnitStateMachine : MonoBehaviour
         myAttack = ScriptableObject.CreateInstance<AttackCommand>();
         myAttack.attacker = gameObject;
         myAttack.target = battleManager.heroesInBattle[Random.Range(0, battleManager.heroesInBattle.Count)];
-        // Catching for Phased units.
+        // Choose a new target if the current one is Phased.
         if (myAttack.target.GetComponent<UnitStateMachine>().delayedAttack) {
             List<GameObject> targets = battleManager.heroesInBattle;
             targets.Remove(myAttack.target);
@@ -134,7 +136,7 @@ public class UnitStateMachine : MonoBehaviour
     {
         UnitStateMachine defender = myAttack.target.GetComponent<UnitStateMachine>();
 
-        // Look for any special handling before the attack. Evade or Guard.
+        // Look for any special handling before the attack. Guard had to be moved outside this method, earlier in the attack coroutine.
         if (defender.isEvading) {
             string textPopup = "Evade!";
             battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, defender.transform.position);
@@ -153,7 +155,7 @@ public class UnitStateMachine : MonoBehaviour
 
         // Post-mitigation effects. Absorption applies here.
         if (defender.isVulnerable) {
-            calcDamage *= 2;
+            calcDamage *= 1.5f;
             defender.isVulnerable = false;
         }
         if (myAttack.damageMode == Attack.DamageMode.Flash) {
@@ -163,6 +165,7 @@ public class UnitStateMachine : MonoBehaviour
 
         // Send damage.
         defender.TakeDamage(Mathf.Floor(calcDamage));
+
         if (myAttack.damageMode == Attack.DamageMode.Burn) {
             TakeDamage(Mathf.Floor(calcDamage / 2));
         }
@@ -196,6 +199,10 @@ public class UnitStateMachine : MonoBehaviour
             defender.isBurning = false;
             defender.isVulnerable = false;
         }
+        else if (myAttack.setStatus == Attack.SetStatus.Guard) {
+            defender.isGuarded = true;
+            defender.GetComponent<UnitStateMachine>().guard = gameObject;
+        }
 
         // Anything else?
     }
@@ -211,6 +218,7 @@ public class UnitStateMachine : MonoBehaviour
         }
 
         attackStarted = false;
+        initiative -= battleManager.turnThreshold;
         turnState = TurnState.Idle;
         battleManager.battleState = BattleManager.BattleState.AdvanceTime;
     }
@@ -234,14 +242,12 @@ public class UnitStateMachine : MonoBehaviour
         // Play an animation and vanish.
         if (animator != null) {
             animator.SetTrigger("Fold");
-        }
-        animationComplete = false;
-        if (animator != null) {
+            animationComplete = false;
             while (!animationComplete) { yield return null; }
         }
         GetComponent<SpriteRenderer>().enabled = false;
 
-        // Set initiative and delayed flag.
+        // Set initiative and delayedAttack flag.
         delayedAttack = true;
         initiative -= battleManager.turnThreshold / 2;
 
@@ -260,23 +266,35 @@ public class UnitStateMachine : MonoBehaviour
         GetComponent<SpriteRenderer>().enabled = true;
         if (animator != null) {
             animator.SetTrigger("Fold");
-        }
-        animationComplete = false;
-        if (animator != null) {
+            animationComplete = false;
             while (!animationComplete) { yield return null; }
         }
 
         // Complete the attack.
         DoDamage();
-        initiative -= battleManager.turnThreshold;
         yield return MoveToTarget(startPosition);
-
         EndTurn();
     }
 
-    private IEnumerator MoveToTarget(Vector2 target)
+    private IEnumerator GuardedAttack(Vector2 attackerStartPosition)
     {
-        yield return new WaitUntil(() => MoveTick(target));
+        // Move the guard and animate him.
+        UnitStateMachine defenderScript = myAttack.target.GetComponent<UnitStateMachine>();
+        GameObject guard = defenderScript.guard;
+        Vector2 guardStartPosition = guard.transform.position;
+
+        guard.transform.position = Vector2.Lerp(transform.position, myAttack.target.transform.position, 0.5f);
+
+        myAttack.target = guard;
+        defenderScript.isGuarded = false;
+        defenderScript.guard = null;
+
+        DoDamage();
+        // This will look better if we wait until the blocking animation is done before continuing.
+        guard.GetComponent<UnitStateMachine>().animator.SetTrigger("Fold");
+        yield return MoveToTarget(attackerStartPosition);
+        guard.transform.position = guardStartPosition;
+        EndTurn();
     }
 
     // Move the unit. Return true when the unit arrives.
@@ -289,6 +307,26 @@ public class UnitStateMachine : MonoBehaviour
         bool hasArrived = Mathf.Approximately(xDifference, 0) && Mathf.Approximately(yDifference, 0);
         return hasArrived;
     }
+
+
+    private IEnumerator MoveToTarget(Vector2 target)
+    {
+        yield return new WaitUntil(() => MoveTick(target));
+    }
+
+    // I know I need to refactor the way I'm handling animations. Is this method helpful? I think I want a separate "Animator manager".
+    /*public IEnumerator PlayAnimation(string animation)
+    {
+        if (animator = null) {
+            Debug.Log(gameObject.name + "tried to start a " + animation + " animation but there's no animator component.");
+            yield break;
+        }
+        else {
+            animator.SetTrigger(animation);
+            animationComplete = false;
+            while (!animationComplete) { yield return null; }
+        }
+    }*/
 
     private IEnumerator StartAttack()
     {
@@ -304,26 +342,23 @@ public class UnitStateMachine : MonoBehaviour
 
         Vector2 startPosition = transform.position;
 
-        // Calculate a target position to end up 3 units away from the attack target. Wait until the unit arrives.
-        Vector3 direction = (transform.position - myAttack.target.transform.position).normalized;
-        Vector3 targetPosition = myAttack.target.transform.position + (3 * direction);
+        // Calculate a target position 80% of the way towards the target. Wait until the unit arrives.
+        Vector2 targetPosition = Vector2.Lerp(transform.position, myAttack.target.transform.position, 0.6f);
         yield return MoveToTarget(targetPosition);
 
-        // Trigger an animation. Wait by setting an event in the animation that sets animationComplete true.
         if (animator != null) {
             animator.SetTrigger("Fold");
-        }
-        animationComplete = false;
-        if (animator != null) {
+            animationComplete = false;
             while (!animationComplete) { yield return null; }
         }
 
+        if (myAttack.target.GetComponent<UnitStateMachine>().isGuarded && myAttack.targetMode == Attack.TargetMode.Enemies) {
+            StartCoroutine(GuardedAttack(startPosition));
+            yield break;
+        }
+
         DoDamage();
-
-        initiative -= battleManager.turnThreshold;
-
         yield return MoveToTarget(startPosition);
-
         EndTurn();
     }
 

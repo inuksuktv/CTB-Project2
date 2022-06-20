@@ -37,7 +37,8 @@ public class Attack : ScriptableObject
         Evasion,
         Regen,
         Vulnerable,
-        Reset
+        Reset,
+        Guard
     }
     public SetStatus setStatus;
 }
