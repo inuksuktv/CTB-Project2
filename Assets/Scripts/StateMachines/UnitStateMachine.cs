@@ -79,6 +79,17 @@ public class UnitStateMachine : MonoBehaviour
         if (currentHP == 0) {
             turnState = TurnState.Dead;
         }
+        Debug.Log(gameObject.name + " took " + damage + " damage.");
+
+        string damagePopup = damage.ToString();
+        Vector3 popupPosition = transform.position;
+        battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(damagePopup, popupPosition);
+    }
+
+    public void TakeStatDamage(float damage)
+    {
+        initiative = Mathf.Clamp((float)initiative - damage, 0, battleManager.turnThreshold * 2);
+        Debug.Log(gameObject.name + " 's initiative reduced by " + damage);
 
         string damagePopup = damage.ToString();
         Vector3 popupPosition = transform.position;
@@ -132,6 +143,52 @@ public class UnitStateMachine : MonoBehaviour
         }
     }
 
+    private void AnimationFinished()
+    {
+        animationComplete = true;
+    }
+
+    private IEnumerator DelayedAttack()
+    {
+        Vector2 startPosition = transform.position;
+
+        // Play an animation and vanish.
+        if (animator != null) {
+            animator.SetTrigger("Fold");
+            animationComplete = false;
+            while (!animationComplete) { yield return null; }
+        }
+        GetComponent<SpriteRenderer>().enabled = false;
+
+        // Set initiative and delayedAttack flag.
+        delayedAttack = true;
+        initiative -= battleManager.turnThreshold / 2;
+
+        // Tell the battle manager to send the next turn.
+        battleManager.battleState = BattleManager.BattleState.AdvanceTime;
+        turnState = TurnState.Idle;
+
+        // Wait until this unit's turn comes up again.
+        yield return new WaitWhile(() => delayedAttack);
+        turnState = TurnState.Acting;
+
+        // Pick a new target if the old target is dead.
+
+        // Appear at a new location.
+        transform.position = myAttack.target.transform.position + Vector3.up;
+        GetComponent<SpriteRenderer>().enabled = true;
+        if (animator != null) {
+            animator.SetTrigger("Fold");
+            animationComplete = false;
+            while (!animationComplete) { yield return null; }
+        }
+
+        // Complete the attack.
+        DoDamage();
+        yield return MoveToTarget(startPosition);
+        EndTurn();
+    }
+
     private void DoDamage()
     {
         UnitStateMachine defender = myAttack.target.GetComponent<UnitStateMachine>();
@@ -164,7 +221,12 @@ public class UnitStateMachine : MonoBehaviour
         }
 
         // Send damage.
-        defender.TakeDamage(Mathf.Floor(calcDamage));
+        if (myAttack.damageMode == Attack.DamageMode.StatDamage) {
+            defender.TakeStatDamage(Mathf.Floor(calcDamage));
+        }
+        else {
+            defender.TakeDamage(Mathf.Floor(calcDamage));
+        }
 
         if (myAttack.damageMode == Attack.DamageMode.Burn) {
             TakeDamage(Mathf.Floor(calcDamage / 2));
@@ -223,59 +285,6 @@ public class UnitStateMachine : MonoBehaviour
         battleManager.battleState = BattleManager.BattleState.AdvanceTime;
     }
 
-    private void StartTurn()
-    {
-        if (delayedAttack) { return; }
-        if (isRegenerating) {
-            float regenAmount = 20;
-            currentHP = Mathf.Clamp(currentHP + regenAmount, 0, maxHP);
-            string textPopup = regenAmount.ToString();
-            Vector3 popupPosition = transform.position;
-            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);
-        }
-    }
-
-    private IEnumerator DelayedAttack()
-    {
-        Vector2 startPosition = transform.position;
-
-        // Play an animation and vanish.
-        if (animator != null) {
-            animator.SetTrigger("Fold");
-            animationComplete = false;
-            while (!animationComplete) { yield return null; }
-        }
-        GetComponent<SpriteRenderer>().enabled = false;
-
-        // Set initiative and delayedAttack flag.
-        delayedAttack = true;
-        initiative -= battleManager.turnThreshold / 2;
-
-        // Tell the battle manager to send the next turn.
-        battleManager.battleState = BattleManager.BattleState.AdvanceTime;
-        turnState = TurnState.Idle;
-
-        // Wait until this unit's turn comes up again.
-        yield return new WaitWhile(() => delayedAttack);
-        turnState = TurnState.Acting;
-
-        // Pick a new target if the old target is dead.
-
-        // Appear at a new location.
-        transform.position = myAttack.target.transform.position + Vector3.up;
-        GetComponent<SpriteRenderer>().enabled = true;
-        if (animator != null) {
-            animator.SetTrigger("Fold");
-            animationComplete = false;
-            while (!animationComplete) { yield return null; }
-        }
-
-        // Complete the attack.
-        DoDamage();
-        yield return MoveToTarget(startPosition);
-        EndTurn();
-    }
-
     private IEnumerator GuardedAttack(Vector2 attackerStartPosition)
     {
         // Move the guard and animate him.
@@ -308,26 +317,6 @@ public class UnitStateMachine : MonoBehaviour
         return hasArrived;
     }
 
-
-    private IEnumerator MoveToTarget(Vector2 target)
-    {
-        yield return new WaitUntil(() => MoveTick(target));
-    }
-
-    // I know I need to refactor the way I'm handling animations. Is this method helpful? I think I want a separate "Animator manager".
-    /*public IEnumerator PlayAnimation(string animation)
-    {
-        if (animator = null) {
-            Debug.Log(gameObject.name + "tried to start a " + animation + " animation but there's no animator component.");
-            yield break;
-        }
-        else {
-            animator.SetTrigger(animation);
-            animationComplete = false;
-            while (!animationComplete) { yield return null; }
-        }
-    }*/
-
     private IEnumerator StartAttack()
     {
         if (attackStarted) {
@@ -342,8 +331,8 @@ public class UnitStateMachine : MonoBehaviour
 
         Vector2 startPosition = transform.position;
 
-        // Calculate a target position 80% of the way towards the target. Wait until the unit arrives.
-        Vector2 targetPosition = Vector2.Lerp(transform.position, myAttack.target.transform.position, 0.6f);
+        // Calculate a target position halfway to the target. Wait until the unit arrives.
+        Vector2 targetPosition = Vector2.Lerp(transform.position, myAttack.target.transform.position, 0.5f);
         yield return MoveToTarget(targetPosition);
 
         if (animator != null) {
@@ -362,8 +351,20 @@ public class UnitStateMachine : MonoBehaviour
         EndTurn();
     }
 
-    private void AnimationFinished()
+    private void StartTurn()
     {
-        animationComplete = true;
+        if (delayedAttack) { return; }
+        if (isRegenerating) {
+            float regenAmount = 20;
+            currentHP = Mathf.Clamp(currentHP + regenAmount, 0, maxHP);
+            string textPopup = regenAmount.ToString();
+            Vector3 popupPosition = transform.position;
+            battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);
+        }
+    }
+
+    private IEnumerator MoveToTarget(Vector2 target)
+    {
+        yield return new WaitUntil(() => MoveTick(target));
     }
 }

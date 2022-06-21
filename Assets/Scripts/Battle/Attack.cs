@@ -26,7 +26,8 @@ public class Attack : ScriptableObject
         Other,
         Delayed,
         Flash,
-        Burn
+        Burn,
+        StatDamage
     }
     public DamageMode damageMode;
 
