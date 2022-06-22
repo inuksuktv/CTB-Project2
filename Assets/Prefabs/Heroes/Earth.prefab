@@ -101,7 +101,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -180,12 +180,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnState: 0
   unitName: 
-  currentHP: 0
-  maxHP: 0
-  baseATK: 0
-  currentATK: 0
-  baseDEF: 0
-  currentDEF: 0
+  currentHP: 100
+  maxHP: 100
+  baseATK: 10
+  currentATK: 10
+  baseDEF: 5
+  currentDEF: 5
   speed: 20
   stateCharge: 0
   animationSpeed: 0
@@ -194,15 +194,19 @@ MonoBehaviour:
   earthTokens: 0
   skyTokens: 0
   dualState: 0
-  alive: 0
   attackStarted: 0
   animationComplete: 0
   initiative: 0
+  isEvading: 0
+  isRegenerating: 0
+  isBurning: 0
+  isVulnerable: 0
   attackList:
   - {fileID: 11400000, guid: 4cd1ead43c0f1684cae28a6e1553dc10, type: 2}
   - {fileID: 11400000, guid: 08e482abdbdd68941955876aec83564d, type: 2}
   - {fileID: 11400000, guid: 7ac3fcdc4ca3a034ea1e6a4fee3fc797, type: 2}
   - {fileID: 11400000, guid: 55ae576f2fe3b83439c64b9721c200ec, type: 2}
+  myAttack: {fileID: 0}
   portrait: {fileID: 21300000, guid: 5c38e2bad310a3e40a0df734f9375981, type: 3}
 --- !u!1001 &6898101604604187442
 PrefabInstance:

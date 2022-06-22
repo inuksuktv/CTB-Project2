@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BattleManager : MonoBehaviour
 {
@@ -76,9 +77,8 @@ public class BattleManager : MonoBehaviour
                 GenerateTurnQueue();
                 battleGUI.ReceiveTurnQueue(turnQueue);
 
-                // Tell the actor to take its turn and wait until it says it's done.
+                // Tell the actor to take its turn. Wait until it says it's done.
                 UnitStateMachine actor = unitInitiatives[0].unit.GetComponent<UnitStateMachine>();
-
                 actor.turnState = UnitStateMachine.TurnState.Choosing;
                 battleState = BattleState.Idle;
 
@@ -86,13 +86,48 @@ public class BattleManager : MonoBehaviour
 
             case BattleState.VictoryCheck:
 
+                if (heroesInBattle.Count < 1) {
+                    battleState = BattleState.Lose;
+                }
+                else if (enemiesInBattle.Count < 1) {
+                    battleState = BattleState.Win;
+                }
+                else {
+                    // Also refresh the GUI. 
+                    battleState = BattleState.Idle;
+                }
+
                 break;
 
             case BattleState.Win:
 
+                Debug.Log("You won the battle.");
+
+                // Stop the active turn.
+                foreach (GameObject hero in heroesInBattle) {
+                    UnitStateMachine script = hero.GetComponent<UnitStateMachine>();
+                    script.StopAllCoroutines();
+                    script.turnState = UnitStateMachine.TurnState.Idle;
+                }
+
+                // Refresh heroes after battle.
+                foreach (GameObject hero in GameManager.Instance.heroes) {
+                    hero.tag = "Hero";
+                    hero.GetComponent<BoxCollider2D>().enabled = true;
+                    UnitStateMachine script = hero.GetComponent<UnitStateMachine>();
+                    script.currentHP = script.maxHP;
+                }
+
+                // Return control to the player and destroy the battle.
+                GameManager.Instance.GetComponent<PlayerInput>().actions.FindActionMap("Field").Enable();
+                GameManager.Instance.heroes[0].GetComponent<PlayerController>().enabled = true;
+                Destroy(gameObject);
+
                 break;
 
             case BattleState.Lose:
+
+                Debug.Log("You lost the battle.");
 
                 break;
         }
@@ -101,7 +136,6 @@ public class BattleManager : MonoBehaviour
     {
         StartCoroutine(StartCombat(collider.gameObject));
     }
-
 
     public IEnumerator StartCombat(GameObject unit)
     {
@@ -113,7 +147,7 @@ public class BattleManager : MonoBehaviour
 
         unit.gameObject.GetComponent<PlayerController>().enabled = false;
 
-        // I'm turning off rigidbodies as well so things don't bump into eachother.
+        // I'm turning off boxColliders in combat so things don't bump into eachother.
         LoadCombatants();
         yield return StartCoroutine(MoveUnitsToMarkers());
 
@@ -126,7 +160,7 @@ public class BattleManager : MonoBehaviour
 
 
 
-    private void LoadCombatants()
+    public void LoadCombatants()
     {
         // Load heroes.
         foreach (GameObject hero in GameManager.Instance.heroes) {
@@ -152,9 +186,9 @@ public class BattleManager : MonoBehaviour
             index++;
         }
 
-        // Also disable rigidbodies?
+        // Turn off colliders in combat.
         foreach (GameObject unit in combatants) {
-            Destroy(unit.GetComponent<Rigidbody2D>());
+            unit.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 
@@ -175,7 +209,7 @@ public class BattleManager : MonoBehaviour
     }
 
     // Move a unit until it arrives at its target.
-    public IEnumerator MoveToTarget(GameObject unit, Vector2 target)
+    private IEnumerator MoveToTarget(GameObject unit, Vector2 target)
     {
         yield return new WaitUntil(() => MoveTick(unit, target));
     }
@@ -208,16 +242,15 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // Sort units by ticks needed.
+    // Sort units by ticksToNextTurn.
     private void CalculateTicksToNextTurn()
     {
-        // Calculate how many ticks each unit needs to fill its initiative.
         foreach (CachedInitiative unit in unitInitiatives) {
             double initiativeDifference = turnThreshold - unit.initiative;
             unit.ticksToNextTurn = initiativeDifference / unit.speed;
         }
 
-        // Sort the array by ticks. Least ticks first.
+        // Least ticks at [0].
         Array.Sort(unitInitiatives, delegate (CachedInitiative a, CachedInitiative b) {
             return a.ticksToNextTurn.CompareTo(b.ticksToNextTurn);
         });
@@ -237,7 +270,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // This method copies unitInitiatives to simulate turns and assumes the list is already sorted with the first entry at 100 initiative.
+    // This method copies unitInitiatives to simulate turns and assumes the list is already sorted with the first unit ready at 100 initiative.
     private void GenerateTurnQueue()
     {
         cacheCopy = new CachedInitiative[unitInitiatives.Length];

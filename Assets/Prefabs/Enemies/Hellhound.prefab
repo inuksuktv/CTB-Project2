@@ -139,12 +139,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnState: 0
   unitName: 
-  currentHP: 0
-  maxHP: 0
-  baseATK: 0
-  currentATK: 0
-  baseDEF: 0
-  currentDEF: 0
+  currentHP: 200
+  maxHP: 200
+  baseATK: 15
+  currentATK: 15
+  baseDEF: 5
+  currentDEF: 5
   speed: 24
   stateCharge: 0
   animationSpeed: 0
@@ -153,11 +153,16 @@ MonoBehaviour:
   earthTokens: 0
   skyTokens: 0
   dualState: 0
-  alive: 0
   attackStarted: 0
   animationComplete: 0
   initiative: 0
-  attackList: []
+  isEvading: 0
+  isRegenerating: 0
+  isBurning: 0
+  isVulnerable: 0
+  attackList:
+  - {fileID: 11400000, guid: ab615be7358f20b4abaa200bc28cb91f, type: 2}
+  myAttack: {fileID: 0}
   portrait: {fileID: 0}
 --- !u!50 &-3364178073172376151
 Rigidbody2D:
@@ -172,7 +177,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 100
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

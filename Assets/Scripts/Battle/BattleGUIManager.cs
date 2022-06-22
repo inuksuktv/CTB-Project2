@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.InputSystem;
 
 public class BattleGUIManager : MonoBehaviour
 {
-    #region "Variables"
+    #region Variables
     public enum HeroGUI
     {
         Idle,
@@ -37,21 +38,22 @@ public class BattleGUIManager : MonoBehaviour
     private GameObject activeUnit;
     private GameObject targetedUnit;
     private int targetIndex;
-    private List<GameObject> targetedTeam;
-    private AttackCommand heroChoice;
+    public AttackCommand heroChoice;
 
     // GUI objects.
     private GameObject activePanel;
     private Transform turnQueueSpacer;
     [SerializeField] private GameObject inputPanel;
     [SerializeField] private GameObject turnQueuePanel;
+    [SerializeField] private GameObject damagePopup;
 
     List<Button> buttons = new List<Button>();
     public List<Portraits> portraits = new List<Portraits>();
     private List<GameObject> inputPanels = new List<GameObject>();
+    private List<GameObject> GUIObjects = new List<GameObject>();
     #endregion
 
-    #region "Awake, OnEnable, and OnDisable"
+    #region Awake, OnEnable, and OnDisable
     private void Awake()
     {
         gameManager = GameObject.Find("GameManager");
@@ -101,16 +103,19 @@ public class BattleGUIManager : MonoBehaviour
         rightInput.Disable();
         downInput.Disable();
 
+        foreach (GameObject element in GUIObjects) {
+            Destroy(element);
+        }
+
         if (playerInput != null) { playerInput.actions.FindActionMap("Battle").Disable(); }
     }
     #endregion
 
-    // All these inputs should be refactored into a state machine. Setting flags to change state is garbage.
-    #region "InputFunctions"
+    // All these inputs should be refactored using a state machine. Setting flags to change state is garbage.
+    #region InputFunctions
 
     private void Confirm(InputAction.CallbackContext context)
     {
-        Debug.Log("Confirm");
         if (waitingForConfirmation) {
             choosingTarget = true;
             choosingAbility = false;
@@ -123,7 +128,7 @@ public class BattleGUIManager : MonoBehaviour
         else if (choosingTarget) {
             choosingTarget = false;
             // Target confirmed. Unit can collect the attack and act.
-            TargetInput(targetedUnit);
+            InputTarget(targetedUnit);
             activeUnit.GetComponent<UnitStateMachine>().CollectAction(heroChoice);
             ClearInputPanels();
             targetedUnit.transform.Find("Selector").gameObject.SetActive(false);
@@ -133,7 +138,6 @@ public class BattleGUIManager : MonoBehaviour
 
     private void Cancel(InputAction.CallbackContext context)
     {
-        Debug.Log("Cancel");
         if (waitingForConfirmation) {
             waitingForConfirmation = false;
             // Refresh input panel.
@@ -154,12 +158,10 @@ public class BattleGUIManager : MonoBehaviour
 
     private void Up(InputAction.CallbackContext context)
     {
-        Debug.Log("Up");
         if (choosingAbility) {
             RectTransform buttonRT = buttons[0].GetComponent<RectTransform>();
-            Attack attack = ScriptableObject.CreateInstance<Attack>();
-            // Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[0];
-            AttackInput(buttonRT, attack);
+            Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[0];
+            InputAttack(buttonRT, attack);
         }
         else if (choosingTarget) {
             TargetNextTeam(targetedUnit);
@@ -168,12 +170,10 @@ public class BattleGUIManager : MonoBehaviour
 
     private void Left(InputAction.CallbackContext context)
     {
-        Debug.Log("Left");
         if (choosingAbility) {
             RectTransform buttonRT = buttons[1].GetComponent<RectTransform>();
-            Attack attack = ScriptableObject.CreateInstance<Attack>();
-            // Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[1];
-            AttackInput(buttonRT, attack);
+            Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[1];
+            InputAttack(buttonRT, attack);
         }
         else if (choosingTarget) {
             TargetPreviousItem(targetedUnit);
@@ -182,12 +182,10 @@ public class BattleGUIManager : MonoBehaviour
 
     private void Right(InputAction.CallbackContext context)
     {
-        Debug.Log("Right");
         if (choosingAbility) {
             RectTransform buttonRT = buttons[2].GetComponent<RectTransform>();
-            Attack attack = ScriptableObject.CreateInstance<Attack>();
-            // Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[2];
-            AttackInput(buttonRT, attack);
+            Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[2];
+            InputAttack(buttonRT, attack);
         }
         else if (choosingTarget) {
             TargetNextItem(targetedUnit);
@@ -196,12 +194,10 @@ public class BattleGUIManager : MonoBehaviour
 
     private void Down(InputAction.CallbackContext context)
     {
-        Debug.Log("Down");
         if (choosingAbility) {
             RectTransform buttonRT = buttons[3].GetComponent<RectTransform>();
-            Attack attack = ScriptableObject.CreateInstance<Attack>();
-            // Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[3];
-            AttackInput(buttonRT, attack);
+            Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[3];
+            InputAttack(buttonRT, attack);
         }
         else if (choosingTarget) {
             TargetNextTeam(targetedUnit);
@@ -214,8 +210,30 @@ public class BattleGUIManager : MonoBehaviour
         battleManager = gameObject.GetComponent<BattleManager>();
         canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
         turnQueueSpacer = canvas.Find("TurnQueueSpacer");
+        GUIObjects.Add(turnQueueSpacer.gameObject);
 
         CreateInputPanels();
+    }
+
+    public void ClearInputPanels()
+    {
+        // Set all the buttons opaque.
+        if (activePanel != null) {
+            foreach (RectTransform child in activePanel.transform) {
+                Image buttonImage = child.GetComponent<Image>();
+                Text buttonText = child.GetComponentInChildren<Text>();
+                Image arrowImage = child.Find("Arrow").GetComponent<Image>();
+
+                buttonImage.color = new Color(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 1f);
+                buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, 1f);
+                arrowImage.color = new Color(arrowImage.color.r, arrowImage.color.g, arrowImage.color.b, 1f);
+            }
+        }
+
+        foreach (GameObject panel in inputPanels) {
+            panel.SetActive(false);
+        }
+        //infoBox.SetActive(false);
     }
 
     public void ReceiveTurnQueue(List<GameObject> turnQueue)
@@ -227,14 +245,141 @@ public class BattleGUIManager : MonoBehaviour
             activePanel.SetActive(true);
 
             UpdateButtons();
+
+            // Change state.
             choosingAbility = true;
+            choosingTarget = false;
         }
 
         GeneratePortraits(turnQueue);
-        AddPortraitsToGUI();
+        SendPortraitsToGUI();
     }
 
-    private void AddPortraitsToGUI()
+    public void TextPopup(string text, Vector3 position)
+    {
+        if (text != null) {
+            GameObject textPopup = Instantiate(damagePopup, canvas);
+
+            Vector2 screenPoint = Camera.main.WorldToScreenPoint(position);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(), screenPoint, null, out Vector2 canvasPoint);
+            textPopup.GetComponent<RectTransform>().localPosition = canvasPoint;
+
+            textPopup.GetComponent<TextMeshProUGUI>().text = text;
+            textPopup.AddComponent<DamageTextAnimation>();
+        }
+    }
+
+    private void InputAttack(Transform button, Attack attack)
+    {
+        heroChoice = ScriptableObject.CreateInstance<AttackCommand>();
+        heroChoice.attacker = activeUnit;
+        heroChoice.description = attack.description;
+        heroChoice.fireTokens = attack.fireTokens;
+        heroChoice.waterTokens = attack.waterTokens;
+        heroChoice.earthTokens = attack.earthTokens;
+        heroChoice.skyTokens = attack.skyTokens;
+        heroChoice.damage = attack.damage;
+        heroChoice.stateCharge = attack.stateCharge;
+        heroChoice.targetMode = attack.targetMode;
+        heroChoice.damageMode = attack.damageMode;
+        heroChoice.setStatus = attack.setStatus;
+
+        // Send the description to the infobox.
+
+        Image buttonImage;
+        Image arrowImage;
+        Text buttonText;
+        // Set transparency on all buttons.
+        foreach (RectTransform child in activePanel.transform) {
+            buttonImage = child.GetComponent<Image>();
+            buttonImage.color = new Color(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 0.5f);
+            arrowImage = child.Find("Arrow").GetComponent<Image>();
+            arrowImage.color = new Color(arrowImage.color.r, arrowImage.color.g, arrowImage.color.b, 0.5f);
+            buttonText = child.GetComponentInChildren<Text>();
+            buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, 0.5f);
+        }
+
+        // Set the chosen button opaque again.
+        buttonImage = button.GetComponent<Image>();
+        buttonImage.color = new Color(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 1f);
+        arrowImage = button.Find("Arrow").GetComponent<Image>();
+        arrowImage.color = new Color(arrowImage.color.r, arrowImage.color.g, arrowImage.color.b, 1f);
+        buttonText = button.GetComponentInChildren<Text>();
+        buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, 1f);
+
+        // Change state.
+        waitingForConfirmation = true;
+    }
+
+    private void InputTarget(GameObject unit)
+    {
+        heroChoice.target = unit;
+    }
+
+    private void CreateInputPanels()
+    {
+        foreach (GameObject hero in battleManager.heroesInBattle) {
+            GameObject newPanel = Instantiate(inputPanel, canvas.transform);
+            newPanel.name = hero.name + "Panel";
+
+            // Set arrow colours based on unit name.
+            if (hero.name == "Fire") {
+                foreach (Transform child in newPanel.transform) {
+                    Image arrow = child.Find("Arrow").GetComponent<Image>();
+                    arrow.color = new Color(1, 0, 0);
+                }
+            }
+            else if (hero.name == "Water") {
+                foreach (Transform child in newPanel.transform) {
+                    Image arrow = child.Find("Arrow").GetComponent<Image>();
+                    arrow.color = new Color(80f / 255f, 134f / 255f, 154f / 255f);
+                }
+            }
+            else if (hero.name == "Earth") {
+                foreach (Transform child in newPanel.transform) {
+                    Image arrow = child.Find("Arrow").GetComponent<Image>();
+                    arrow.color = new Color(211f / 255f, 109f / 255f, 79f / 255f);
+                }
+            }
+            else if (hero.name == "Sky") {
+                foreach (Transform child in newPanel.transform) {
+                    Image arrow = child.Find("Arrow").GetComponent<Image>();
+                    arrow.color = new Color(112f / 255f, 159f / 255f, 69f / 255f);
+                }
+            }
+
+            newPanel.SetActive(false);
+            inputPanels.Add(newPanel);
+            GUIObjects.Add(newPanel);
+
+            Vector3 offset = 0.7f * Vector3.up;
+            Vector2 screenPoint = Camera.main.WorldToScreenPoint(hero.transform.position + offset);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas, screenPoint, null, out Vector2 canvasPoint);
+            newPanel.GetComponent<RectTransform>().localPosition = canvasPoint;
+        }
+    }
+
+    private void GeneratePortraits(List<GameObject> turnQueue)
+    {
+        portraits.Clear();
+
+        foreach (GameObject turn in turnQueue) {
+            Portraits newPanel = new Portraits
+            {
+                unit = turn,
+                sprite = turn.GetComponent<UnitStateMachine>().portrait,
+                duplicate = false
+            };
+            foreach (Portraits portrait in portraits) {
+                if (portrait.unit == turn) {
+                    newPanel.duplicate = true;
+                }
+            }
+            portraits.Add(newPanel);
+        }
+    }
+
+    private void SendPortraitsToGUI()
     {
         foreach (Transform child in turnQueueSpacer) {
             Destroy(child.gameObject);
@@ -266,133 +411,6 @@ public class BattleGUIManager : MonoBehaviour
 
             index++;
         }
-    }
-
-    private void AttackInput(Transform button, Attack attack)
-    {
-        heroChoice = new AttackCommand
-        {
-            attackerName = activeUnit.name,
-            description = attack.description,
-            chosenAttack = attack,
-            attacker = activeUnit
-        };
-
-        // Send the description to the infobox.
-
-        Image buttonImage;
-        Image arrowImage;
-        Text buttonText;
-        // Set transparency on all buttons.
-        foreach (RectTransform child in activePanel.transform) {
-            buttonImage = child.GetComponent<Image>();
-            buttonImage.color = new Color(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 0.5f);
-            arrowImage = child.Find("Arrow").GetComponent<Image>();
-            arrowImage.color = new Color(arrowImage.color.r, arrowImage.color.g, arrowImage.color.b, 0.5f);
-            buttonText = child.GetComponentInChildren<Text>();
-            buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, 0.5f);
-        }
-
-        // Set the chosen button opaque again.
-        buttonImage = button.GetComponent<Image>();
-        buttonImage.color = new Color(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 1f);
-        arrowImage = button.Find("Arrow").GetComponent<Image>();
-        arrowImage.color = new Color(arrowImage.color.r, arrowImage.color.g, arrowImage.color.b, 1f);
-        buttonText = button.GetComponentInChildren<Text>();
-        buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, 1f);
-
-        // Change state.
-        waitingForConfirmation = true;
-    }
-
-    private void ClearInputPanels()
-    {
-        // Set all the buttons opaque.
-        if (activePanel != null) {
-            foreach (RectTransform child in activePanel.transform) {
-                Image buttonImage = child.GetComponent<Image>();
-                Text buttonText = child.GetComponentInChildren<Text>();
-                Image arrowImage = child.Find("Arrow").GetComponent<Image>();
-
-                buttonImage.color = new Color(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 1f);
-                buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, 1f);
-                arrowImage.color = new Color(arrowImage.color.r, arrowImage.color.g, arrowImage.color.b, 1f);
-            }
-        }
-
-        foreach (GameObject panel in inputPanels) {
-            panel.SetActive(false);
-        }
-        //infoBox.SetActive(false);
-    }
-
-    private void CreateInputPanels()
-    {
-        foreach (GameObject hero in battleManager.heroesInBattle) {
-            GameObject newPanel = Instantiate(inputPanel, canvas.transform);
-            newPanel.name = hero.name + "Panel";
-
-            if(hero.name == "Fire") {
-                foreach (Transform child in newPanel.transform) {
-                    Image arrow = child.Find("Arrow").GetComponent<Image>();
-                    arrow.color = new Color(255f/255f, 68f/255f, 70f / 255f);
-                }
-            }
-            else if (hero.name == "Water") {
-                foreach (Transform child in newPanel.transform) {
-                    Image arrow = child.Find("Arrow").GetComponent<Image>();
-                    Debug.Log(arrow.color);
-                    arrow.color = new Color(80f / 255f, 134f / 255f, 154f / 255f);
-                }
-            }
-            else if (hero.name == "Earth") {
-                foreach (Transform child in newPanel.transform) {
-                    Image arrow = child.Find("Arrow").GetComponent<Image>();
-                    arrow.color = new Color(211f / 255f, 109f / 255f, 79f / 255f);
-                }
-            }
-            else if (hero.name == "Sky") {
-                foreach (Transform child in newPanel.transform) {
-                    Image arrow = child.Find("Arrow").GetComponent<Image>();
-                    arrow.color = new Color(112f / 255f, 159f / 255f, 69f / 255f);
-                }
-            }
-
-            newPanel.SetActive(false);
-            inputPanels.Add(newPanel);
-
-            Vector3 offset = 0.7f * Vector3.up;
-            Vector2 screenPoint = Camera.main.WorldToScreenPoint(hero.transform.position + offset);
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas, screenPoint, null, out Vector2 canvasPoint);
-            newPanel.GetComponent<RectTransform>().localPosition = canvasPoint;
-        }
-    }
-
-    // Prepare the portraits based on the turnQueue.
-    private void GeneratePortraits(List<GameObject> turnQueue)
-    {
-        portraits.Clear();
-
-        foreach (GameObject turn in turnQueue) {
-            Portraits newPanel = new Portraits
-            {
-                unit = turn,
-                sprite = turn.GetComponent<UnitStateMachine>().portrait,
-                duplicate = false
-            };
-            foreach (Portraits portrait in portraits) {
-                if (portrait.unit == turn) {
-                    newPanel.duplicate = true;
-                }
-            }
-            portraits.Add(newPanel);
-        }
-    }
-
-    private void TargetInput(GameObject unit)
-    {
-        heroChoice.target = unit;
-        heroChoice.attackTargetName = unit.name;
     }
 
     private void TargetNextItem(GameObject currentTarget) 
@@ -457,7 +475,7 @@ public class BattleGUIManager : MonoBehaviour
             Image buttonImage = button.GetComponent<Image>();
 
             Attack attack = activeUnit.GetComponent<UnitStateMachine>().attackList[index];
-            buttonText.text = attack.attackName;
+            buttonText.text = attack.name;
             buttonImage.sprite = attack.buttonSprite;
             index++;
         }

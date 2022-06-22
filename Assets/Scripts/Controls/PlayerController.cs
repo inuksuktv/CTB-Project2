@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     private float speed = 10f;
     private Vector2 move;
+    private Vector3 movement;
     private Rigidbody2D playerRb;
     private Animator animator;
 
@@ -76,6 +77,7 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        playerRb.transform.Translate(speed * Time.deltaTime * move);
+        //playerRb.transform.Translate(speed * Time.deltaTime * move);
+        playerRb.MovePosition((Vector2)transform.position + speed * Time.deltaTime * move);
     }
 }
