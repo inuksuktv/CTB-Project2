@@ -173,6 +173,9 @@ public class UnitStateMachine : MonoBehaviour
         turnState = TurnState.Acting;
 
         // Pick a new target if the old target is dead.
+        if (myAttack.target.CompareTag("DeadEnemy")) {
+            myAttack.target = battleManager.enemiesInBattle[Random.Range(0, battleManager.enemiesInBattle.Count)];
+        }
 
         // Appear at a new location.
         transform.position = myAttack.target.transform.position + Vector3.up;
