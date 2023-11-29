@@ -29,6 +29,7 @@ public class UnitStateMachine : MonoBehaviour
     public AttackCommand myAttack;
     public Sprite portrait;
     public GameObject guard;
+    public MOBAEnergyBar healthBar;
 
     private void Start()
     {
@@ -36,6 +37,11 @@ public class UnitStateMachine : MonoBehaviour
         animator = GetComponent<Animator>();
         animationSpeed = battleManager.animationSpeed;
         turnState = TurnState.Idle;
+
+        ScreenSpacePanel screenSpacePanel = GetComponentInChildren<ScreenSpacePanel>();
+        healthBar = screenSpacePanel.PanelUIElement.GetComponentInChildren<MOBAHealthBarPanel>().HealthBar;
+        healthBar.MaxValue = maxHP;
+        healthBar.SetValueNoBurn(currentHP);
     }
 
     private void Update()
@@ -76,6 +82,7 @@ public class UnitStateMachine : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHP = Mathf.Clamp(currentHP - damage, 0, maxHP);
+        healthBar.Value = currentHP;
         if (currentHP == 0) {
             turnState = TurnState.Dead;
         }
@@ -103,11 +110,17 @@ public class UnitStateMachine : MonoBehaviour
         myAttack = ScriptableObject.CreateInstance<AttackCommand>();
         myAttack.attacker = gameObject;
         myAttack.target = battleManager.heroesInBattle[Random.Range(0, battleManager.heroesInBattle.Count)];
-        // Choose a new target if the current one is Phased.
+        // Handling for phased heroes.
         if (myAttack.target.GetComponent<UnitStateMachine>().delayedAttack) {
             List<GameObject> targets = battleManager.heroesInBattle;
             targets.Remove(myAttack.target);
-            myAttack.target = targets[Random.Range(0, targets.Count)];
+            if (targets.Count == 0) {
+                EndTurn();
+                return;
+            }
+            else {
+                myAttack.target = targets[Random.Range(0, targets.Count)];
+            }
         }
 
         myAttack.description = attack.description;
@@ -277,6 +290,7 @@ public class UnitStateMachine : MonoBehaviour
         if (isBurning) {
             float burnAmount = 20;
             currentHP = Mathf.Clamp(currentHP - burnAmount, 1, maxHP);
+            healthBar.Value = currentHP;
             string textPopup = burnAmount.ToString();
             Vector3 popupPosition = transform.position;
             battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);
@@ -360,6 +374,7 @@ public class UnitStateMachine : MonoBehaviour
         if (isRegenerating) {
             float regenAmount = 20;
             currentHP = Mathf.Clamp(currentHP + regenAmount, 0, maxHP);
+            healthBar.Value = currentHP;
             string textPopup = regenAmount.ToString();
             Vector3 popupPosition = transform.position;
             battleManager.gameObject.GetComponent<BattleGUIManager>().TextPopup(textPopup, popupPosition);

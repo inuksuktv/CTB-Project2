@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
@@ -73,7 +74,7 @@ public class BattleManager : MonoBehaviour
                 CalculateTicksToNextTurn();
                 AdvanceTime();
 
-                // Simulate time and generate a turnQueue. This makes no changes to unitInitiatives.
+                // Simulate time and generate a turnQueue. This must leave unitInitiatives unchanged.
                 GenerateTurnQueue();
                 battleGUI.ReceiveTurnQueue(turnQueue);
 
@@ -114,6 +115,7 @@ public class BattleManager : MonoBehaviour
                 foreach (GameObject hero in GameManager.Instance.heroes) {
                     hero.tag = "Hero";
                     hero.GetComponent<BoxCollider2D>().enabled = true;
+                    hero.GetComponent<SpriteRenderer>().color = Color.white;
                     UnitStateMachine script = hero.GetComponent<UnitStateMachine>();
                     script.currentHP = script.maxHP;
                 }
@@ -156,6 +158,9 @@ public class BattleManager : MonoBehaviour
 
         battleGUI.enabled = true;
         battleState = BattleState.AdvanceTime;
+
+        yield return null;
+        battleGUI.EnableHealthBars();
     }
 
 

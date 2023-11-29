@@ -43,14 +43,17 @@ public class BattleGUIManager : MonoBehaviour
     // GUI objects.
     private GameObject activePanel;
     private Transform turnQueueSpacer;
+    private GameObject _infoBox;
     [SerializeField] private GameObject inputPanel;
     [SerializeField] private GameObject turnQueuePanel;
     [SerializeField] private GameObject damagePopup;
+    [SerializeField] private GameObject infoBoxPrefab;
 
     List<Button> buttons = new List<Button>();
     public List<Portraits> portraits = new List<Portraits>();
     private List<GameObject> inputPanels = new List<GameObject>();
     private List<GameObject> GUIObjects = new List<GameObject>();
+    private Image[] energyBars;
     #endregion
 
     #region Awake, OnEnable, and OnDisable
@@ -212,6 +215,11 @@ public class BattleGUIManager : MonoBehaviour
         turnQueueSpacer = canvas.Find("TurnQueueSpacer");
         GUIObjects.Add(turnQueueSpacer.gameObject);
 
+        _infoBox = Instantiate(infoBoxPrefab, canvas);
+        _infoBox.name = "InfoBox";
+        _infoBox.SetActive(false);
+        GUIObjects.Add(_infoBox);
+
         CreateInputPanels();
     }
 
@@ -233,7 +241,22 @@ public class BattleGUIManager : MonoBehaviour
         foreach (GameObject panel in inputPanels) {
             panel.SetActive(false);
         }
-        //infoBox.SetActive(false);
+        _infoBox.SetActive(false);
+    }
+
+    public void DestroyHealthBars()
+    {
+        // We need to track all units in battle, not just the alive ones.
+    }
+
+    public void EnableHealthBars()
+    {
+        foreach (GameObject combatant in battleManager.combatants) {
+            energyBars = combatant.GetComponent<UnitStateMachine>().healthBar.transform.parent.GetComponentsInChildren<Image>();
+            foreach (Image bar in energyBars) {
+                bar.enabled = true;
+            }
+        }
     }
 
     public void ReceiveTurnQueue(List<GameObject> turnQueue)
@@ -285,6 +308,10 @@ public class BattleGUIManager : MonoBehaviour
         heroChoice.setStatus = attack.setStatus;
 
         // Send the description to the infobox.
+        if (_infoBox.transform.Find("Text").TryGetComponent<TextMeshProUGUI>(out var text)) {
+            text.text = heroChoice.description;
+        }
+        _infoBox.SetActive(true);
 
         Image buttonImage;
         Image arrowImage;
@@ -292,11 +319,11 @@ public class BattleGUIManager : MonoBehaviour
         // Set transparency on all buttons.
         foreach (RectTransform child in activePanel.transform) {
             buttonImage = child.GetComponent<Image>();
-            buttonImage.color = new Color(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 0.5f);
+            buttonImage.color = new Color(buttonImage.color.r, buttonImage.color.g, buttonImage.color.b, 0.25f);
             arrowImage = child.Find("Arrow").GetComponent<Image>();
-            arrowImage.color = new Color(arrowImage.color.r, arrowImage.color.g, arrowImage.color.b, 0.5f);
+            arrowImage.color = new Color(arrowImage.color.r, arrowImage.color.g, arrowImage.color.b, 0.25f);
             buttonText = child.GetComponentInChildren<Text>();
-            buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, 0.5f);
+            buttonText.color = new Color(buttonText.color.r, buttonText.color.g, buttonText.color.b, 0.25f);
         }
 
         // Set the chosen button opaque again.
