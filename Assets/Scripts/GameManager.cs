@@ -36,11 +36,6 @@ public class GameManager : MonoBehaviour
         activeHero.GetComponent<PlayerController>().enabled = true;
     }
 
-    private void Update()
-    {
-
-    }
-
     public void SwitchHero(GameObject unit)
     {
         unit.GetComponent<PlayerController>().enabled = false;

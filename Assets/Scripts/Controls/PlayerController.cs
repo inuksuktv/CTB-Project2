@@ -77,7 +77,6 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        //playerRb.transform.Translate(speed * Time.deltaTime * move);
         playerRb.MovePosition((Vector2)transform.position + speed * Time.deltaTime * move);
     }
 }
