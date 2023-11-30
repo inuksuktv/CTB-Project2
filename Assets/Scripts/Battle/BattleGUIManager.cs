@@ -297,12 +297,9 @@ public class BattleGUIManager : MonoBehaviour
         heroChoice = ScriptableObject.CreateInstance<AttackCommand>();
         heroChoice.attacker = activeUnit;
         heroChoice.description = attack.description;
-        heroChoice.fireTokens = attack.fireTokens;
-        heroChoice.waterTokens = attack.waterTokens;
-        heroChoice.earthTokens = attack.earthTokens;
-        heroChoice.skyTokens = attack.skyTokens;
+        heroChoice.tokens = attack.tokens;
         heroChoice.damage = attack.damage;
-        heroChoice.stateCharge = attack.stateCharge;
+        heroChoice.charge = attack.charge;
         heroChoice.targetMode = attack.targetMode;
         heroChoice.damageMode = attack.damageMode;
         heroChoice.setStatus = attack.setStatus;

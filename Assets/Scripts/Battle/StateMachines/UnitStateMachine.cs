@@ -124,12 +124,9 @@ public class UnitStateMachine : MonoBehaviour
         }
 
         myAttack.description = attack.description;
-        myAttack.fireTokens = attack.fireTokens;
-        myAttack.waterTokens = attack.waterTokens;
-        myAttack.earthTokens = attack.earthTokens;
-        myAttack.skyTokens = attack.skyTokens;
+        myAttack.tokens = attack.tokens;
         myAttack.damage = attack.damage;
-        myAttack.stateCharge = attack.stateCharge;
+        myAttack.charge = attack.charge;
         myAttack.targetMode = attack.targetMode;
         myAttack.damageMode = attack.damageMode;
         myAttack.setStatus = attack.setStatus;

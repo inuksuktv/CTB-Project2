@@ -11079,6 +11079,10 @@ PrefabInstance:
       propertyPath: damagePopup
       value: 
       objectReference: {fileID: 2055671606897451398, guid: 27b43648f0c18804c8d466e02593264e, type: 3}
+    - target: {fileID: 8309232979308724313, guid: ce0efb34953b14c4197ca497af0597ba, type: 3}
+      propertyPath: infoBoxPrefab
+      value: 
+      objectReference: {fileID: 4926619645610083421, guid: cd5937bb683aa7d4ab1ba7c0b8d5edfb, type: 3}
     - target: {fileID: 8309232979308724317, guid: ce0efb34953b14c4197ca497af0597ba, type: 3}
       propertyPath: m_Name
       value: BattleManager

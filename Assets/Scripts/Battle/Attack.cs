@@ -6,8 +6,8 @@ using UnityEngine;
 public class Attack : ScriptableObject
 {
     public string description;
-    public int fireTokens, waterTokens, earthTokens, skyTokens;
-    public float damage, stateCharge;
+    public int tokens;
+    public float damage, charge;
     public Sprite buttonSprite;
 
     public enum TargetMode
